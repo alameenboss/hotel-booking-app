@@ -1,0 +1,38 @@
+<main class="content">
+  <div class="container-fluid p-0">
+    <div class="row mt-2 mb-xl-3">
+      <div class="col-auto ms-auto text-end mt-n1">
+        <a (click)="$event.preventDefault();addRoom()" class="btn btn-primary">New Room</a>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xl-12">
+        <div class="card">
+          <div class="card-header pb-0">
+            <h5 class="card-title mb-0">Room List</h5>
+          </div>
+          <div class="card-body">
+            <table class="table table-striped" style="width:100%">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Room Number</th>
+                  <th>Type</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor = "let _room of roomList;let i = index">
+                  <td>{{i+1}}</td>
+                  <td>{{_room.name}}</td>
+                  <td>{{_room.type}}</td>
+                  <td><button type="button" class="btn btn-primary" (click)="editRoom(_room.id)">Edit</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>

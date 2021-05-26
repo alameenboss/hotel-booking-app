@@ -1,0 +1,94 @@
+<main class="content">
+  <div class="container-fluid p-0">
+    <h1>Book Room</h1>
+    <div class="row mt-2">
+      <form class="row g-3">
+        <div style="width: 0px;margin: 0px;padding: 0px;">
+          <input name="datepicker" class="form-control form-group hidden" ngbDatepicker #datepicker="ngbDatepicker"
+            (dateSelect)="onDateSelection($event)" [displayMonths]="2" [dayTemplate]="t"
+            outsideDays="hidden" [startDate]="fromDate!" tabindex="-1">
+          <ng-template #t let-date let-focused="focused">
+            <span class="custom-day" [class.focused]="focused" [class.range]="isRange(date)"
+              [class.faded]="isHovered(date) || isInside(date)" (mouseenter)="hoveredDate = date"
+              (mouseleave)="hoveredDate = null">
+              {{ date.day }}
+            </span>
+          </ng-template>
+        </div>
+
+        <div class="col-2 form-group">
+          <div class="input-group">
+            <input #dpFromDate class="form-control" placeholder="yyyy-mm-dd" name="dpFromDate"
+              [value]="formatter.format(fromDate)" (input)="fromDate = validateInput(fromDate, dpFromDate.value)">
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary" (click)="datepicker.toggle()" type="button"><i
+                  class="fas fa-calendar-alt"></i></button>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-2 form-group">
+          <div class="input-group">
+            <input #dpToDate class="form-control" placeholder="yyyy-mm-dd" name="dpToDate"
+              [value]="formatter.format(toDate)" (input)="toDate = validateInput(toDate, dpToDate.value)">
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary" (click)="datepicker.toggle()" type="button"><i
+                  class="fas fa-calendar-alt"></i></button>
+            </div>
+          </div>
+        </div>
+        <div class="col-2">
+          <select class="form-select" id="roomType" [(ngModel)]="roomType" aria-label="Room Type">
+            <option selected value="Single">Single</option>
+            <option value="Double">Double</option>
+          </select>
+        </div>
+        <div class="col-2">
+          <button class="btn btn-primary" (click)="searchRoom()" type="button">Find Room</button>
+        </div>
+
+        <div class="col-2 ms-auto text-end mt-n1">
+          <a (click)="$event.preventDefault();myBooking()" class="btn btn-primary">My Booking</a>
+        </div>
+      </form>
+    </div>
+    <div class="row mt-5">
+      <div class="col-xl-12">
+        <div class="card">
+          <div class="card-header pb-0">
+            <h5 class="card-title mb-0">Room Status</h5>
+          </div>
+          <div class="card-body">
+            <table class="table table-striped" style="width:100%">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Room Number</th>
+                  <th>Type</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor = "let _room of roomList;let i = index">
+                  <td>{{i+1}}</td>
+                  <td>{{_room.roomName}}</td>
+                  <td>{{_room.type}}</td>
+                  <td>
+                    <span 
+                      [ngClass]="{'bg-success': _room.status=='Not Booked', 'bg-danger': _room.status=='Booked'}" 
+                      class="badge">{{_room.status}}
+                    </span>
+                  </td>
+                  <td>
+                    <button class="btn btn-primary" (click)="bookRoom(_room.roomId)" type="button">Book</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>

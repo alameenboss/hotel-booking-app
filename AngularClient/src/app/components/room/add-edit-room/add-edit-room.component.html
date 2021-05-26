@@ -1,0 +1,48 @@
+<main class="content">
+    <div class="container-fluid p-0">
+        <h1>{{title}}</h1>
+        <div class="row mt-2">
+            <div class="col-4">
+                <button class="btn btn-primary" (click)="roomList()">Room List</button>
+            </div>
+        </div>
+        <div class="row mt-2" *ngIf="!submitted">
+
+            <div class="col-lg-4">
+                <div class="mb-3">
+                    <label for="roomNumber" class="form-label">Room Number</label>
+                    <input type="text" 
+                    class="form-control" 
+                    id="roomNumber" 
+                    required
+                    [(ngModel)]="room.name"
+                    placeholder="F-101">
+                </div>
+                <div class="mb-3">
+                    <label for="roomType" class="form-label">Room Type</label>
+                    <select class="form-select" 
+                            id="roomType" 
+                            required
+                            [(ngModel)]="room.type"
+                            aria-label="Room Type">
+                        <option selected value="Single">Single</option>
+                        <option value="Double">Double</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <button type="button" (click)="createRoom()" *ngIf="!isEditMode" class="btn btn-success">Create New Room</button>
+                    <button type="button" (click)="deleteRoom()" *ngIf="isEditMode" class="btn btn-danger">Delete Room</button>
+                    <button type="button" (click)="updateRoom()" *ngIf="isEditMode" class="btn btn-success">Update Room</button>
+                </div>
+
+            </div>
+
+        </div>
+        <div  class="row mt-2" *ngIf="submitted ">
+            <div class="col-lg-4">
+                <h3>{{message}}</h3>
+                <button class="btn btn-primary" *ngIf="submitted && !isEditMode" (click)="newRoom()">New Room</button>
+            </div>
+          </div>
+    </div>
+</main>
