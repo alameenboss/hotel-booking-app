@@ -1,0 +1,12 @@
+<mat-card>
+    <mat-card-title>Email Confirmation</mat-card-title>
+    <mat-card-content>
+        <mat-error *ngIf="showError">
+            {{errorMessage}}
+        </mat-error>
+        <div *ngIf="showSuccess">
+            Your email has been successfully confirmed. Please <a [routerLink]="['/authentication/login']"> click here
+                to log in. </a>
+        </div>
+    </mat-card-content>
+</mat-card>

@@ -56,54 +56,52 @@ Hotel Booking App is a web based hotel room reservation system.
 ### Home
 
 ![Home](./screens/01_Home.png)
+![Home](./screens/01_Home_with_calender.png)
+![Home](./screens/02_Search_Room_Result.png)
 
 ### Login
 
-![Login](./screens/02_Login.png)
+![Login](./screens/03_Login.png)
 
 ### Register
 
-![Register](./screens/03_Register.png)
+![Register](./screens/05_Register.png)
 
-### ForgotPassword
+### Forgot Password
 
-![ForgotPassword](./screens/04_ForgotPassword.png)
+![ForgotPassword](./screens/04_Forgot_Password.png)
 
-### Admin_Home
+### Dashboard - Admin
 
-![Admin_Home](./screens/05_Admin_Home.png)
+![Dashboard](./screens/06_Dashboard.png)
 
-### Admin_Dashboard
+### Dashboard DarkMode - Admin
 
-![Admin_Dashboard](./screens/06_Admin_Dashboard.png)
+![Dashboard_DarkMode](./screens/06_Dashboard_DarkMode.png)
 
-### RoomList
+### RoomList - Admin
 
 ![RoomList](./screens/07_RoomList.png)
 
-### AddRoom
+### AddRoom - Admin
 
 ![AddRoom](./screens/08_AddRoom.png)
 
-### Admin_Edit_Delete_Room
+### Edit Delete Room - Admin
 
-![Admin_Edit_Delete_Room](./screens/09_Admin_Edit_Delete_Room.png)
+![Edit_Room](./screens/09_Edit_Room.png)
 
-### User_List
+### User List - Admin
 
-![User_List](./screens/10_User_List.png)
+![User_List](./screens/10_UserList.png)
 
-### Customer_Home
+### Search and Book Room - Customer
 
-![Customer_Home](./screens/11_Customer_Home.png)
+![Search and Book Room](./screens/11_Seach_Book_Room.png)
 
-### Customer_Find_and_Book_Room
+### My Booking
 
-![Customer_Find_and_Book_Room](./screens/12_Customer_Find_and_Book_Room.png)
-
-### Customer_My_Booking
-
-![Customer_My_Booking](./screens/12_Customer_My_Booking.png)
+![My Booking](./screens/11_View_Booked_Room.png)
 
 ### Swagger_API
 
@@ -112,3 +110,7 @@ Hotel Booking App is a web based hotel room reservation system.
 ### JWT_Authentication
 
 ![JWT_Authentication](./screens/API_02_JWT_Authentication.png)
+
+### Flip Card Game
+
+![Flip Card Game](./screens/11_Flip_Card_Game.png)

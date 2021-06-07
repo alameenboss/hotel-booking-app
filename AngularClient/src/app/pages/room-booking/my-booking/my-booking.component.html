@@ -1,0 +1,88 @@
+<!-- <main class="content">
+  <div class="container-fluid p-0">
+    <h1>My Booking</h1>
+
+    <div class="row mt-5">
+      <div class="col-xl-12">
+        <div class="card">
+          <div class="card-header pb-0">
+            <h5 class="card-title mb-0">History</h5>
+          </div>
+          <div class="card-body">
+            <table class="table table-striped" style="width:100%">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Booked From</th>
+                  <th>Booked To</th>
+                  <th>Room Number</th>
+                  <th>Type</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor = "let _room of roomList;let i = index">
+                  <td>{{i+1}}</td>
+                  <td>{{_room.startDate}}</td>
+                  <td>{{_room.endDate}}</td>
+                  <td>{{_room.roomName}}</td>
+                  <td>{{_room.type}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main> -->
+
+<mat-card>
+  <mat-card-title>
+    My Booking
+  </mat-card-title>
+  <mat-card-content>
+    <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-between center" fxLayoutGap="20px">
+      <mat-form-field>
+        <mat-label>Filter</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
+      </mat-form-field>
+      <button mat-raised-button color="accent" (click)="searchRoom()">Search Room</button>
+    </div>
+    <div class="mat-elevation-z8">
+      <table mat-table [dataSource]="dataSource" matSort>
+
+
+        <ng-container matColumnDef="startDate">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Booked From </th>
+          <td mat-cell *matCellDef="let row"> {{row.startDate}} </td>
+        </ng-container>
+
+
+        <ng-container matColumnDef="endDate">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Booked To </th>
+          <td mat-cell *matCellDef="let row"> {{row.endDate}} </td>
+        </ng-container>
+
+
+        <ng-container matColumnDef="roomName">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Room Number </th>
+          <td mat-cell *matCellDef="let row"> {{row.roomName}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="type">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Type </th>
+          <td mat-cell *matCellDef="let row"> {{row.type}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+        <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+        </tr>
+      </table>
+
+      <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+    </div>
+  </mat-card-content>
+</mat-card>

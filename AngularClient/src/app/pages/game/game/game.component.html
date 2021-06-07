@@ -1,0 +1,21 @@
+<div class="p-16">
+  
+    
+  <div fxLayout="column" fxLayoutAlign="center center">
+    <p class="text-center">
+      Tap on a card to flip it. You can only flip a maximum of two cards at a time. 
+      A match will remove those cards!
+    </p>
+    <p>You clicked <span style="font-size: larger;font-weight: 700;">{{clickedCount}}</span> times</p>
+    <button mat-raised-button  color="primary" (click)="restart()">Restart</button>
+  </div>
+    <div class="grid p-16">
+    <app-game-card *ngFor="let c of cards; let idx=index" [data]="c" (cardClicked)="cardClicked(idx)">
+    </app-game-card>
+  </div>
+</div>
+
+<br>
+<div class="text-center">
+  Based on https://github.com/thisiszoaib/angular-memory-game
+</div>

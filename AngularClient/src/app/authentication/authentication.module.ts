@@ -1,36 +1,42 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RegisterUserComponent } from './register-user/register-user.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { ReactiveFormsModule } from '@angular/forms';
-import { LoginComponent } from './login/login.component';
-import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
-import { ResetPasswordComponent } from './reset-password/reset-password.component';
-import { EmailConfirmationComponent } from './email-confirmation/email-confirmation.component';
-import { TwoStepVerificationComponent } from './two-step-verification/two-step-verification.component';
-import { ProfileComponent } from './profile/profile.component';
+import { EmailConfirmationComponent } from './components/email-confirmation/email-confirmation.component';
+import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
+import { LoginComponent } from './components/login/login.component';
+import { ProfileComponent } from './components/profile/profile.component';
+import { RegisterUserComponent } from './components/register-user/register-user.component';
+import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
+import { TwoStepVerificationComponent } from './components/two-step-verification/two-step-verification.component';
+import { MaterialModule } from '../shared/modules/material.module';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { AuthGuard } from './guards/auth.guard';
 
 @NgModule({
   declarations: [
-    RegisterUserComponent, 
-    LoginComponent, 
-    ForgotPasswordComponent, 
-    ResetPasswordComponent, 
-    EmailConfirmationComponent, 
+    RegisterUserComponent,
+    LoginComponent,
+    ForgotPasswordComponent,
+    ResetPasswordComponent,
+    EmailConfirmationComponent,
     TwoStepVerificationComponent,
     ProfileComponent
   ],
   imports: [
     CommonModule,
+    MaterialModule,
+    FormsModule,
+    FlexLayoutModule,
     ReactiveFormsModule,
     RouterModule.forChild([
       { path: 'register', component: RegisterUserComponent },
       { path: 'login', component: LoginComponent },
       { path: 'forgotpassword', component: ForgotPasswordComponent },
-      { path: 'resetpassword', component: ResetPasswordComponent },
+      { path: 'resetpassword', component: ResetPasswordComponent, canActivate: [AuthGuard] },
       { path: 'emailconfirmation', component: EmailConfirmationComponent },
       { path: 'twostepverification', component: TwoStepVerificationComponent },
-      { path: 'profile', component: ProfileComponent }
+      { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]  }
     ])
   ]
 })

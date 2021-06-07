@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  urlAddress: 'http://www.hotelbooking_client.com'
+  urlAddress:'https://localhost:5001'
 };

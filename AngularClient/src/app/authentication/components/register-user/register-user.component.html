@@ -1,0 +1,49 @@
+<mat-card>
+    <mat-card-content>
+        <form [formGroup]="registerForm" autocomplete="off" novalidate (ngSubmit)="registerUser(registerForm.value)">
+            <h2>Register</h2>
+            <mat-error *ngIf="showError">
+                <span [innerHTML]="errorMessage"></span>
+            </mat-error>
+            <mat-form-field class="full-width-input">
+                <input matInput placeholder="First Name" formControlName="firstName" required>
+                <mat-error *ngIf="validateControl('firstName') && hasError('firstName', 'required')">
+                    Please provide a valid first name.
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="full-width-input">
+                <input matInput placeholder="Last Name" formControlName="lastName" required>
+                <mat-error *ngIf="validateControl('lastName') && hasError('lastName', 'required')">
+                    Please provide a valid last name.
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="full-width-input">
+                <input matInput type="email" placeholder="Email" formControlName="email" required>
+                <mat-error>
+                    <span *ngIf="validateControl('email') && hasError('email', 'email')">Please provide a valid
+                        email</span>
+                    <span *ngIf="validateControl('email') && hasError('email', 'required')">Email is required</span>
+                </mat-error>
+
+            </mat-form-field>
+            <mat-form-field class="full-width-input">
+                <input matInput type="password" placeholder="Password" formControlName="password" required>
+                <mat-error *ngIf="validateControl('password') && hasError('password', 'required')">
+                    Password is required
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="full-width-input">
+                <input matInput type="password" placeholder="Confirm Password" formControlName="confirm" required>
+                <mat-error>
+                    <span *ngIf="validateControl('confirm') && hasError('confirm', 'required')">Confirmation is
+                        required</span>
+                    <span *ngIf="hasError('confirm', 'mustMatch')">Passwords must match</span>
+                </mat-error>
+            </mat-form-field>
+            <div style="display: flex; justify-content: center;align-items: center;">
+                <button mat-raised-button color="primary" type="submit"
+                    [disabled]="!registerForm.valid">Register</button>
+            </div>
+        </form>
+    </mat-card-content>
+</mat-card>

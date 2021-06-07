@@ -1,18 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { AuthenticationService } from './shared/services/authentication.service';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  template: `
+  <app-navigation></app-navigation>
+  `
 })
-export class AppComponent implements OnInit {
-  title = 'HotelBooking.Client.Oidc';
-
-  constructor(private _authService: AuthenticationService){}
-
-  ngOnInit(): void {
-    if(this._authService.isUserAuthenticated())
-      this._authService.sendAuthStateChangeNotification(true);
-  }
+export class AppComponent {
+  title = 'simple-app';
 }

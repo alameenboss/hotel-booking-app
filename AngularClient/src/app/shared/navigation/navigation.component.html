@@ -1,0 +1,99 @@
+<app-loader></app-loader>
+<div class="mat-app-background" [ngClass]="{'dark-theme-mode':isDarkTheme}">
+  <mat-toolbar color="primary">
+    <div>
+      <button mat-icon-button (click)="sidenav.toggle()">
+        <mat-icon>menu</mat-icon>
+      </button>
+    </div>
+    <div>
+      <a [routerLink]="['default/home']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+        Hotel Booking
+      </a>
+    </div>
+
+    <div fxFlex fxLayout fxLayoutAlign="flex-end center" fxLayoutGap="10px">
+      <!-- <ul *ngIf="!isUserAuthenticated" fxLayout fxLayoutGap="10px" class="navigation-items" fxHide.xs>
+        <li>
+          <a [routerLink]="['/authentication/login']" routerLinkActive="active"
+            [routerLinkActiveOptions]="{exact: true}" fxLayout fxLayoutAlign="center center" fxLayoutGap="5px">
+            <mat-icon>vpn_key</mat-icon>
+            <span>Login</span>
+          </a>
+        </li>
+        <li>
+          <a [routerLink]="['/authentication/register']" routerLinkActive="active"
+            [routerLinkActiveOptions]="{exact: true}" fxLayout fxLayoutAlign="center center" fxLayoutGap="5px">
+            <mat-icon>contacts</mat-icon>
+            <span>Register</span>
+          </a>
+        </li>
+      </ul>
+      <ul *ngIf="isUserAuthenticated" fxLayout fxLayoutGap="10px" class="navigation-items" fxHide.xs>
+        <li>
+          <a (click)="logout()" type="button" fxLayout fxLayoutAlign="center center" fxLayoutGap="5px">
+            <mat-icon>input</mat-icon>
+            <span>LogOut</span>
+          </a>
+        </li>
+      </ul> -->
+      <div fxLayout fxLayoutAlign="flex-end" fxLayoutGap="10px">
+        <mat-slide-toggle [(ngModel)]="isDarkTheme" labelPosition="before" (change)="storeThemeSelection()">
+          <mat-icon>bedtime</mat-icon>
+        </mat-slide-toggle>
+      </div>
+    </div>
+
+
+  </mat-toolbar>
+</div>
+
+<mat-sidenav-container class="mat-app-background" [ngClass]="{'dark-theme-mode':isDarkTheme}">
+  <mat-sidenav #sidenav class="mat-elevation-z8" [mode]="(isHandset$ | async) ? 'over':'side'"
+    [opened]='isUserAuthenticated' role="navigation">
+    <mat-nav-list *ngIf='!isUserAuthenticated'>
+      <a mat-list-item  class="mat-menu-link" [routerLink]="['/authentication/login']" routerLinkActive="active">
+        <mat-icon>vpn_key</mat-icon>
+        <span>Login</span>
+      </a>
+      <a mat-list-item  class="mat-menu-link" [routerLink]="['/authentication/register']" routerLinkActive="active"
+        [routerLinkActiveOptions]="{exact: true}">
+        <mat-icon>contacts</mat-icon>
+        <span>Register</span>
+      </a>
+    </mat-nav-list>
+    <mat-nav-list>
+      <ng-container *ngIf='isUserAuthenticated'>
+        <img class="avatar mat-elevation-z8" src="https://source.unsplash.com/c_GmwfHBDzk/200x200" />
+        <h4 class="name">John Smith</h4>
+        <p class="designation">Software Engineer</p>
+        <mat-divider></mat-divider>
+      </ng-container>
+
+      <ng-container *ngFor="let menu of menulist">
+        <a mat-list-item *ngIf='menu.role == undefine' routerLink={{menu.path}} routerLinkActive="active"
+          [routerLinkActiveOptions]="{exact: true}" class="mat-menu-link">
+          <mat-icon>{{menu.icon}}</mat-icon>
+          <span>{{menu.title}}</span>
+        </a>
+        <a mat-list-item class="mat-menu-link"
+         *ngIf='isUserAuthenticated && (menu.role == "admin" || menu.role == "member")'
+          routerLink={{menu.path}} routerLinkActive="active"
+           [routerLinkActiveOptions]="{exact: true}">
+          <mat-icon>{{menu.icon}}</mat-icon>
+          <span>{{menu.title}}</span>
+        </a>
+      </ng-container>
+      <mat-divider *ngIf='isUserAuthenticated'></mat-divider>
+      <a mat-list-item *ngIf='isUserAuthenticated' (click)="logout()">
+        <mat-icon>input</mat-icon>
+        <span>LogOut</span>
+      </a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <main class="main">
+      <router-outlet></router-outlet>
+    </main>
+  </mat-sidenav-content>
+</mat-sidenav-container>

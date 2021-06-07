@@ -1,0 +1,35 @@
+<div class="content">
+  <div fxLayout="row wrap" fxLayoutGap="16px grid">
+    <div fxFlex="100%" fxLayoutAlign="center center" *ngFor="let room of roomList">
+      <mat-card class="mat-elevation-z4">
+        <mat-card-header>
+          <mat-card-title>{{room.RoomNumber}} - {{room.roomType}} - Rs. {{room.price}} / day </mat-card-title>
+        </mat-card-header>
+        <mat-card-content fxLayout="row" fxLayoutGap="1%">
+          <div fxLayout="column" fxLayoutAlign="space-between" fxFlex="68%">
+            <div>
+              As a bonus (since you’re already here), let’s showcase more of the power of flex layout. Keeping our
+              layout directives in our templates like this (instead of CSS), we can actually make them dynamic in
+              nature. So let’s create a column slider control which will allow users to change the number of cards in a
+              row on desktop sizes!
+            </div>
+            <div fxLayout="row wrap" fxLayoutAlign="flex-start" fxLayoutGap="16px grid">
+              <mat-icon>network_wifi</mat-icon>
+              <mat-icon>local_airport</mat-icon>
+              <mat-icon>local_bar</mat-icon>
+              <mat-icon>local_cafe</mat-icon>
+              <mat-icon>local_dining</mat-icon>
+              <mat-icon>local_atm</mat-icon>
+              <mat-icon>local_parking</mat-icon>
+              <mat-icon>local_taxi</mat-icon>
+            </div>
+          </div>
+          <img fxFlex="30%" class="room-img" src="assets/hotel/{{room.roomType}}.jpg">
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-button>BOOK</button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+</div>

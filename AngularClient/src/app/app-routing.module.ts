@@ -1,36 +1,22 @@
+import { AdminGuard } from 'src/app/authentication/guards/admin.guard';
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { MyBookingComponent } from './components/my-booking/my-booking.component';
-import { AddEditRoomComponent } from './components/room/add-edit-room/add-edit-room.component';
-import { BookRoomComponent } from './components/room/book-room/book-room.component';
-import { RoomListComponent } from './components/room/room-list/room-list.component';
-import { UserListComponent } from './components/user/user-list/user-list.component';
-import { NotFoundComponent } from './error-pages/not-found/not-found.component';
-import { ForbiddenComponent } from './forbidden/forbidden.component';
-import { HomeComponent } from './home/home.component';
-import { PrivacyComponent } from './privacy/privacy.component';
-import { AdminGuard } from './shared/guards/admin.guard';
-import { AuthGuard } from './shared/guards/auth.guard';
-import { MemberGuard } from './shared/guards/member.guard';
+import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from './authentication/guards/auth.guard';
+import { MemberGuard } from './authentication/guards/member.guard';
 
-export const routes: Routes = [
-  { path: 'home', component: HomeComponent },
-  { path: 'company', loadChildren: () => import('./company/company.module').then(m => m.CompanyModule), canActivate: [AuthGuard] },
+const routes: Routes = [
+  { path: 'default', loadChildren: () => import('./pages/common/default.module').then(m => m.DefaultModule) },
   { path: 'authentication', loadChildren: () => import('./authentication/authentication.module').then(m => m.AuthenticationModule) },
-  { path: 'privacy', component: PrivacyComponent, canActivate: [AuthGuard, AdminGuard] },
-  { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard, AdminGuard], data: { title: 'Dashboard Page' } },
-  { path: 'room-list', component: RoomListComponent, canActivate: [AuthGuard, AdminGuard], data: { title: 'Room List' } },
-  { path: 'add-room', component: AddEditRoomComponent, canActivate: [AuthGuard, AdminGuard], data: { title: 'Add Room' } },
-  { path: 'edit-room/:id', component: AddEditRoomComponent, canActivate: [AuthGuard, AdminGuard], data: { title: 'Edit Room' } },
-  { path: 'user-list', component: UserListComponent, canActivate: [AuthGuard, AdminGuard], data: { title: 'User List' } },
-  { path: 'book-room', component: BookRoomComponent, canActivate: [AuthGuard, MemberGuard], data: { title: 'Book Room' } },
-  { path: 'my-booking', component: MyBookingComponent, canActivate: [AuthGuard, MemberGuard], data: { title: 'Book Room' } },
-  { path: 'forbidden', component: ForbiddenComponent },
-  { path: '404', component: NotFoundComponent },
-  { path: '', redirectTo: '/home', pathMatch: 'full' },
-  { path: '**', redirectTo: '/404', pathMatch: 'full' },
-
+  { path: 'company', loadChildren: () => import('./pages/company/company.module').then(m => m.CompanyModule), canActivate: [AuthGuard] },
+  { path: 'roombooking', loadChildren: () => import('./pages/room-booking/roombooking.module').then(m => m.RoomBookingModule), canActivate: [AuthGuard, MemberGuard] },
+  { path: 'room', loadChildren: () => import('./pages/room/room.module').then(m => m.RoomModule), canActivate: [AuthGuard, AdminGuard] },
+  { path: 'ui', loadChildren: () => import('./pages/ui-testing/ui.module').then(m => m.UIModule) },
+  { path: 'post', loadChildren: () => import('./pages/posts/post.module').then(m => m.PostModule) },
+  { path: 'user', loadChildren: () => import('./pages/users/user.module').then(m => m.UserModule), canActivate: [AuthGuard, AdminGuard] },
+  { path: 'error', loadChildren: () => import('./pages/error-pages/error.module').then(m => m.ErrorModule) },
+  { path: 'game', loadChildren: () => import('./pages/game/game.module').then(m => m.GameModule) },
+  { path: '', redirectTo: '/default', pathMatch: 'full' },
+  { path: '**', redirectTo: '/error/404', pathMatch: 'full' },
 ];
 
 @NgModule({
