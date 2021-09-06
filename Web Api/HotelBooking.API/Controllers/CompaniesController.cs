@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
-using HotelBooking.API.Contracts;
-using HotelBooking.API.Entities.DataTransferObjects;
+using HotelBooking.API.DTO.Company;
+using HotelBooking.Data.Repository.Contracts;
+using HotelBooking.LoggerService.Interface;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;

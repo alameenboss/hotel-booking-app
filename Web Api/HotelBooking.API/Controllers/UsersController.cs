@@ -1,7 +1,7 @@
-﻿using HotelBooking.API.Entities.Models;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,22 +12,22 @@ namespace HotelBooking.API.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-		private readonly UserManager<User> _userManager;
+		private readonly UserManager<IdentityUser> _userManager;
 
-		public UsersController(UserManager<User> userManager)
+		public UsersController(UserManager<IdentityUser> userManager)
 		{
 			_userManager = userManager;
 		}
 
 		[HttpGet]
-		public async Task<ActionResult<IEnumerable<User>>> GetAllUsers()
+		public async Task<ActionResult<IEnumerable<IdentityUser>>> GetAllUsers()
 		{
-			var users = _userManager.Users.ToList();
+			var users = await _userManager.Users.ToListAsync();
 			return Ok(users);
 		}
 
 		[HttpPost("makeUserAdmin")]
-		public async Task<ActionResult> makeUserAdmin(string userId)
+		public async Task<ActionResult> MakeUserAdmin(string userId)
 		{
 			var user = await _userManager.FindByIdAsync(userId);
 

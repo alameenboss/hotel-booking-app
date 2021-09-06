@@ -51,6 +51,14 @@ Hotel Booking App is a web based hotel room reservation system.
 * Onion Architecture
 * Swagger UI
 
+## Migration commands
+
+### Add Migration
+`Add-Migration -Name "RenamedColumns" -OutputDir "EFCore\Migrations" -Project "HotelBooking.Data.Repository"`
+
+### Add Migration
+`Update-Database`
+
 ## Screens
 
 ### Home

@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using HotelBooking.API.EmailService;
-using HotelBooking.API.Entities.DTO;
-using HotelBooking.API.Entities.Models;
+using HotelBooking.API.DTO.Auth;
 using HotelBooking.API.JwtFeatures;
+using HotelBooking.EmailService.Interface;
+using HotelBooking.EmailService.Model;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
@@ -17,12 +17,12 @@ namespace HotelBooking.API.Controllers
 	[ApiController]
 	public class AccountsController : ControllerBase
 	{
-		private readonly UserManager<User> _userManager;
+		private readonly UserManager<IdentityUser> _userManager;
 		private readonly IMapper _mapper;
 		private readonly JwtHandler _jwtHandler;
 		private readonly IEmailSender _emailSender;
 
-		public AccountsController(UserManager<User> userManager, IMapper mapper, JwtHandler jwtHandler, IEmailSender emailSender)
+		public AccountsController(UserManager<IdentityUser> userManager, IMapper mapper, JwtHandler jwtHandler, IEmailSender emailSender)
 		{
 			_userManager = userManager;
 			_mapper = mapper;
@@ -36,7 +36,7 @@ namespace HotelBooking.API.Controllers
 			if (userForRegistration == null || !ModelState.IsValid)
 				return BadRequest();
 
-			var user = _mapper.Map<User>(userForRegistration);
+			var user = _mapper.Map<IdentityUser>(userForRegistration);
 
 			var result = await _userManager.CreateAsync(user, userForRegistration.Password);
 			if (!result.Succeeded)
@@ -81,7 +81,7 @@ namespace HotelBooking.API.Controllers
 
 				if (await _userManager.IsLockedOutAsync(user))
 				{
-					var content = $"Your account is locked out. To reset the password click this link: {userForAuthentication.clientURI}";
+					var content = $"Your account is locked out. To reset the password click this link: {userForAuthentication.ClientURI}";
 					var message = new Message(new string[] { userForAuthentication.Email }, "Locked out account information", content, null);
 					await _emailSender.SendEmailAsync(message);
 
@@ -101,7 +101,7 @@ namespace HotelBooking.API.Controllers
 			return Ok(new AuthResponseDto { IsAuthSuccessful = true, Token = token });
 		}
 
-		private async Task<IActionResult> GenerateOTPFor2StepVerification(User user)
+		private async Task<IActionResult> GenerateOTPFor2StepVerification(IdentityUser user)
 		{
 			var providers = await _userManager.GetValidTwoFactorProvidersAsync(user);
 			if (!providers.Contains("Email"))
@@ -212,7 +212,7 @@ namespace HotelBooking.API.Controllers
 
 				if (user == null)
 				{
-					user = new User { Email = payload.Email, UserName = payload.Email };
+					user = new IdentityUser { Email = payload.Email, UserName = payload.Email };
 					await _userManager.CreateAsync(user);
 
 					//prepare and send an email for the email confirmation

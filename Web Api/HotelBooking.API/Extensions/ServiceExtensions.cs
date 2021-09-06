@@ -1,11 +1,5 @@
-﻿using HotelBooking.API.Contracts;
-using HotelBooking.API.Entities;
-using HotelBooking.API.LoggerService;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
-using HotelBooking.API.Repository;
 
 namespace HotelBooking.API.Extensions
 {
@@ -25,16 +19,6 @@ namespace HotelBooking.API.Extensions
             {
 
             });
-
-        public static void ConfigureLoggerService(this IServiceCollection services) =>
-            services.AddScoped<ILoggerManager, LoggerManager>();
-
-        public static void ConfigureSqlContext(this IServiceCollection services, IConfiguration configuration) =>
-            services.AddDbContext<RepositoryContext>(opts =>
-                opts.UseSqlServer(configuration.GetConnectionString("sqlConnection"), b => b.MigrationsAssembly("HotelBooking.API")));
-
-        public static void ConfigureRepositoryManager(this IServiceCollection services) =>
-           services.AddScoped<IRepositoryManager, RepositoryManager>();
 
     }
 }

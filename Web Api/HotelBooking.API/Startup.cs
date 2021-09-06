@@ -1,10 +1,9 @@
 using AutoMapper;
 using HotelBooking.API.Extensions;
-using HotelBooking.API.JwtFeatures;
-using HotelBooking.API.EmailService;
-using HotelBooking.API.Entities;
-using HotelBooking.API.Entities.Models;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+using HotelBooking.Data.Repository.EFCore;
+using HotelBooking.Data.Repository.Extensions;
+using HotelBooking.EmailService.Extensions;
+using HotelBooking.LoggerService.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpOverrides;
@@ -12,12 +11,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
 using NLog;
-using System;
 using System.IO;
-using System.Text;
 
 namespace HotelBooking.API
 {
@@ -37,82 +32,13 @@ namespace HotelBooking.API
             services.ConfigureCors();
             services.ConfigureIISIntegration();
             services.ConfigureLoggerService();
-            services.ConfigureSqlContext(Configuration);
-            services.ConfigureRepositoryManager();
+            services.RegisterBusinessService(Configuration);
             services.AddAutoMapper(typeof(Startup));
 
-            services.AddIdentity<User, IdentityRole>(opt => 
-            {
-                opt.Password.RequiredLength = 7;
-                opt.Password.RequireDigit = false;
+            services.ConfigureIdentity(Configuration);
+            services.ConfigureEmail(Configuration);
 
-                opt.User.RequireUniqueEmail = true;
-
-                opt.Lockout.AllowedForNewUsers = true;
-                opt.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(2);
-                opt.Lockout.MaxFailedAccessAttempts = 3;
-            })
-             .AddEntityFrameworkStores<RepositoryContext>()
-             .AddDefaultTokenProviders();
-
-            services.Configure<DataProtectionTokenProviderOptions>(opt =>
-                opt.TokenLifespan = TimeSpan.FromHours(2));
-
-            var jwtSettings = Configuration.GetSection("JwtSettings");
-            services.AddAuthentication(opt =>
-            {
-                opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(options =>
-            {
-                options.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuer = true,
-                    ValidateAudience = true,
-                    ValidateLifetime = true,
-                    ValidateIssuerSigningKey = true,
-
-                    ValidIssuer = jwtSettings.GetSection("validIssuer").Value,
-                    ValidAudience = jwtSettings.GetSection("validAudience").Value,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.GetSection("securityKey").Value))
-                };
-            });
-
-            services.AddScoped<JwtHandler>();
-
-            var emailConfig = Configuration
-                .GetSection("EmailConfiguration")
-                .Get<EmailConfiguration>();
-            services.AddSingleton(emailConfig);
-            services.AddScoped<IEmailSender, EmailSender>();
-
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Hotel Booking", Version = "v1" });
-
-                var securitySchema = new OpenApiSecurityScheme
-                {
-                    Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
-                    Name = "Authorization",
-                    In = ParameterLocation.Header,
-                    Type = SecuritySchemeType.Http,
-                    Scheme = "bearer",
-                    Reference = new OpenApiReference
-                    {
-                        Type = ReferenceType.SecurityScheme,
-                        Id = "Bearer"
-                    }
-                };
-
-                c.AddSecurityDefinition("Bearer", securitySchema);
-
-                var securityRequirement = new OpenApiSecurityRequirement
-                {
-                    { securitySchema, new[] { "Bearer" } }
-                };
-
-                c.AddSecurityRequirement(securityRequirement);
-            });
+            services.ConfigureSwagger();
             services.AddControllers();
         }
 
@@ -120,7 +46,7 @@ namespace HotelBooking.API
         public void Configure(
             IApplicationBuilder app, 
             IWebHostEnvironment env,
-            UserManager<User> userManager,
+            UserManager<IdentityUser> userManager,
             RoleManager<IdentityRole> roleManager
             ){
             if (env.IsDevelopment())
@@ -147,14 +73,7 @@ namespace HotelBooking.API
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.UseSwagger();
-            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
-            // specifying the Swagger JSON endpoint.
-            app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
-                c.RoutePrefix = "";
-            });
+            app.EnableSwagger();
 
             app.UseEndpoints(endpoints =>
             {

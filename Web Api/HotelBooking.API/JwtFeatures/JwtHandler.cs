@@ -1,5 +1,5 @@
-﻿using HotelBooking.API.Entities.DTO;
-using HotelBooking.API.Entities.Models;
+﻿using HotelBooking.API.DTO.Auth;
+using HotelBooking.Domain;
 using Google.Apis.Auth;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
@@ -19,8 +19,9 @@ namespace HotelBooking.API.JwtFeatures
 		private readonly IConfiguration _configuration;
 		private readonly IConfigurationSection _jwtSettings;
 		private readonly IConfigurationSection _goolgeSettings;
-		private readonly UserManager<User> _userManager;
-		public JwtHandler(IConfiguration configuration, UserManager<User> userManager)
+		private readonly UserManager<IdentityUser> _userManager;
+		public JwtHandler(IConfiguration configuration, 
+			UserManager<IdentityUser> userManager)
 		{
 			_userManager = userManager;
 			_configuration = configuration;
@@ -36,7 +37,7 @@ namespace HotelBooking.API.JwtFeatures
 			return new SigningCredentials(secret, SecurityAlgorithms.HmacSha256);
 		}
 
-		private async Task<List<Claim>> GetClaims(User user)
+		private async Task<List<Claim>> GetClaims(IdentityUser user)
 		{
 			var claims = new List<Claim>
 			{
@@ -65,7 +66,7 @@ namespace HotelBooking.API.JwtFeatures
 			return tokenOptions;
 		}
 
-		public async Task<string> GenerateToken(User user)
+		public async Task<string> GenerateToken(IdentityUser user)
 		{
 			var signingCredentials = GetSigningCredentials();
 			var claims = await GetClaims(user);
@@ -89,6 +90,7 @@ namespace HotelBooking.API.JwtFeatures
 			}
 			catch (Exception ex)
 			{
+
 				//log an exception
 				return null;
 			}
