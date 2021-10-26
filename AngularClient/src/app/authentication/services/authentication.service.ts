@@ -21,16 +21,19 @@ import { environment } from 'src/environments/environment';
 export class AuthenticationService {
   private _authChangeSub = new Subject<boolean>()
   public authChanged = this._authChangeSub.asObservable();
-
+  baseUrl;
   constructor(private _http: HttpClient, 
-    private _jwtHelper: JwtHelperService, private _externalAuthService: SocialAuthService) {}
+    private _jwtHelper: JwtHelperService, private _externalAuthService: SocialAuthService) {
+      this.baseUrl = environment.identityServerUrl;
+
+    }
 
   public registerUser = (route: string, body: UserForRegistrationDto) => {
-    return this._http.post<RegistrationResponseDto>(this.createCompleteRoute(route, environment.urlAddress), body);
+    return this._http.post<RegistrationResponseDto>(this.createCompleteRoute(route, this.baseUrl), body);
   }
 
   public loginUser = (route: string, body: UserForAuthenticationDto) => {
-    return this._http.post<AuthResponseDto>(this.createCompleteRoute(route, environment.urlAddress), body);
+    return this._http.post<AuthResponseDto>(this.createCompleteRoute(route, this.baseUrl), body);
   }
 
   public logout = () => {
@@ -39,11 +42,11 @@ export class AuthenticationService {
   }
 
   public forgotPassword = (route: string, body: ForgotPasswordDto) => {
-    return this._http.post(this.createCompleteRoute(route, environment.urlAddress), body);
+    return this._http.post(this.createCompleteRoute(route, this.baseUrl), body);
   }
 
   public resetPassword = (route: string, body: ResetPasswordDto) => {
-    return this._http.post(this.createCompleteRoute(route, environment.urlAddress), body);
+    return this._http.post(this.createCompleteRoute(route, this.baseUrl), body);
   }
 
   public confirmEmail = (route: string, token: string, email: string) => {
@@ -51,11 +54,11 @@ export class AuthenticationService {
     params = params.append('token', token);
     params = params.append('email', email);
 
-    return this._http.get(this.createCompleteRoute(route, environment.urlAddress), { params: params });
+    return this._http.get(this.createCompleteRoute(route, this.baseUrl), { params: params });
   }
 
   public twoStepLogin = (route: string, body: TwoFactorDto) => {
-    return this._http.post<AuthResponseDto>(this.createCompleteRoute(route, environment.urlAddress), body);
+    return this._http.post<AuthResponseDto>(this.createCompleteRoute(route, this.baseUrl), body);
   }
 
   public signInWithGoogle = ()=> {
@@ -67,7 +70,7 @@ export class AuthenticationService {
   }
 
   public externalLogin = (route: string, body: ExternalAuthDto) => {
-    return this._http.post<AuthResponseDto>(this.createCompleteRoute(route, environment.urlAddress), body);
+    return this._http.post<AuthResponseDto>(this.createCompleteRoute(route, this.baseUrl), body);
   }
 
   public sendAuthStateChangeNotification = (isAuthenticated: boolean) => {

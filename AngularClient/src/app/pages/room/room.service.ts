@@ -1,43 +1,44 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { environment } from 'src/environments/environment';
+import { roomUrl } from 'src/app/shared/apiEndPoints';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class RoomService {
-  baseUrl;
+
   constructor(private httpClient: HttpClient) {
-    this.baseUrl = environment.urlAddress + '/api/rooms';
+
   }
 
   getAll(): Observable<any> {
-    return this.httpClient.get(this.baseUrl);
+    return this.httpClient.get(roomUrl);
   }
 
   getById(id): Observable<any> {
-    return this.httpClient.get(`${this.baseUrl}/${id}`);
+    return this.httpClient.get(`${roomUrl}/${id}`);
   }
 
   createNew(data): Observable<any> {
-    return this.httpClient.post(this.baseUrl, data);
+    return this.httpClient.post(roomUrl, data);
   }
 
   update(id, data): Observable<any> {
-    return this.httpClient.put(`${this.baseUrl}/${id}`, data);
+    return this.httpClient.put(`${roomUrl}/${id}`, data);
   }
 
   delete(id): Observable<any> {
-    return this.httpClient.delete(`${this.baseUrl}/${id}`);
+    return this.httpClient.delete(`${roomUrl}/${id}`);
   }
 
   deleteAll(): Observable<any> {
-    return this.httpClient.delete(this.baseUrl);
+    return this.httpClient.delete(roomUrl);
   }
 
   searchByName(name): Observable<any> {
-    return this.httpClient.get(`${this.baseUrl}?name=${name}`);
+    return this.httpClient.get(`${roomUrl}?name=${name}`);
   }
 
 }

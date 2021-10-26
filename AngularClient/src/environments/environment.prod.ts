@@ -1,4 +1,5 @@
 export const environment = {
   production: true,
-  urlAddress:'https://localhost:5001'
+  apiUrl:'https://localhost:5001',
+  identityServerUrl:'https://localhost:6001'
 };
