@@ -1,8 +1,11 @@
-using HotelBooking.Data.Repository.EFCore;
+using HotelBooking.LoggerService.Extensions;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Serilog;
+using System;
+using System.IO;
 
 namespace HotelBooking.API
 {
@@ -10,22 +13,44 @@ namespace HotelBooking.API
     {
         public static void Main(string[] args)
         {
-            //CreateHostBuilder(args).Build().Run();
+            try
+            {
+                var host = CreateHostBuilder(args).Build();
 
-            var host = CreateHostBuilder(args).Build();
-            //using (var serviceScope = host.Services.CreateScope())
-            //{
-            //    var context = serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-            //    context.Database.Migrate();
-            //}
-            host.Run();
+                IWebHostEnvironment env = host.Services.GetRequiredService<IWebHostEnvironment>();
+
+               
+
+
+                //using (var serviceScope = host.Services.CreateScope())
+                //{
+                //    var context = serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+                //    context.Database.Migrate();
+                //}
+
+                Log.Information("Starting host...");
+                host.Run();
+            }
+            catch (Exception ex)
+            {
+                Log.Fatal(ex, "Host terminated unexpectedly.");
+            }
+            finally
+            {
+                Log.CloseAndFlush();
+            }
         }
+
+        
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
+                .UseSerilog() // Uses Serilog instead of default .NET Logger
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
                 });
     }
+
+   
 }

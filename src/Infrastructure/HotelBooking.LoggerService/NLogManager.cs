@@ -3,11 +3,11 @@ using NLog;
 
 namespace HotelBooking.LoggerService
 {
-    public class LoggerManager : ILoggerManager
+    public class NLogManager : ILoggerManager
     {
         private static readonly ILogger logger = LogManager.GetCurrentClassLogger();
 
-        public LoggerManager()
+        public NLogManager()
         {
         }
 

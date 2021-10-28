@@ -15,7 +15,7 @@ namespace HotelBooking.Web.Common
             services.ConfigureCors();
             services.ConfigureIISIntegration();
             services.ConfigureSwagger();
-            services.ConfigureLoggerService();
+            
             services.ConfigureEmail(configuration);
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         }
