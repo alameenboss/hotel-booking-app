@@ -1,13 +1,11 @@
 ﻿using HotelBooking.API.JwtFeatures;
 using HotelBooking.Data.Repository.EFCore;
 using HotelBooking.Data.Repository.Extensions;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+using HotelBooking.Web.Common.Extensions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.IdentityModel.Tokens;
 using System;
-using System.Text;
 
 namespace HotelBooking.API.Extensions
 {
@@ -34,28 +32,12 @@ namespace HotelBooking.API.Extensions
 
             services.Configure<DataProtectionTokenProviderOptions>(opt =>
                 opt.TokenLifespan = TimeSpan.FromHours(2));
-
-            var jwtSettings = configuration.GetSection("JwtSettings");
-            services.AddAuthentication(opt =>
-            {
-                opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(options =>
-            {
-                options.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuer = true,
-                    ValidateAudience = true,
-                    ValidateLifetime = true,
-                    ValidateIssuerSigningKey = true,
-
-                    ValidIssuer = jwtSettings.GetSection("validIssuer").Value,
-                    ValidAudience = jwtSettings.GetSection("validAudience").Value,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.GetSection("securityKey").Value))
-                };
-            });
+            
+            services.ConfigureAuthentication(configuration);
 
             services.AddScoped<JwtHandler>();
         }
+
     }
+
 }

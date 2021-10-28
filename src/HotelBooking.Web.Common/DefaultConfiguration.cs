@@ -1,10 +1,10 @@
-﻿using HotelBooking.API.Extensions;
+﻿using AutoMapper;
+using HotelBooking.API.Extensions;
 using HotelBooking.EmailService.Extensions;
 using HotelBooking.LoggerService.Extensions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using NLog;
-using System.IO;
+using System;
 
 namespace HotelBooking.Web.Common
 {
@@ -17,6 +17,7 @@ namespace HotelBooking.Web.Common
             services.ConfigureSwagger();
             services.ConfigureLoggerService();
             services.ConfigureEmail(configuration);
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         }
     }
 }

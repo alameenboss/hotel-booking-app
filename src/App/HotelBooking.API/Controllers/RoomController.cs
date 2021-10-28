@@ -1,5 +1,6 @@
 ﻿using HotelBooking.Domain;
 using HotelBooking.Service.Contracts;
+using HotelBooking.Web.Common.Controllers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -7,8 +8,8 @@ using System.Threading.Tasks;
 
 namespace HotelBooking.API.Controllers
 {
-    //[Authorize(Roles = "Administrator")]
-    public class RoomController : BaseController
+    [Authorize(Roles = "Administrator")]
+    public class RoomController : DefaultBaseController
     {
         private readonly IRoomService _roomService;
 

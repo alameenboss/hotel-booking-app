@@ -10,6 +10,6 @@ namespace HotelBooking.Data.Repository.Extensions
         public static void RegisterIdentityDbContext(this IServiceCollection services, IConfiguration configuration) =>
             services.AddDbContext<UserDbContext>(opts =>
                 opts.UseSqlServer(configuration.GetConnectionString("sqlConnection"),
-                    b => b.MigrationsAssembly("HotelBooking.Data.Repository")));
+                    b => b.MigrationsAssembly("HotelBooking.IdentityServer")));
     }
 }

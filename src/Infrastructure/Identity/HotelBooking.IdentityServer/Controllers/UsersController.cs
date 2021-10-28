@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using HotelBooking.Web.Common.Controllers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -8,9 +9,7 @@ using System.Threading.Tasks;
 namespace HotelBooking.API.Controllers
 {
     [Authorize(Roles = "Administrator")]
-    [Route("api/[controller]")]
-    [ApiController]
-    public class UsersController : ControllerBase
+    public class UsersController : DefaultBaseController
     {
         private readonly UserManager<IdentityUser> _userManager;
 

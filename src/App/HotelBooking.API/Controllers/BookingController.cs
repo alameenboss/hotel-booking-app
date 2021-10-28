@@ -1,6 +1,7 @@
 ﻿using HotelBooking.API.DTO.Room;
 using HotelBooking.Domain;
 using HotelBooking.Service.Contracts;
+using HotelBooking.Web.Common.Controllers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -11,17 +12,25 @@ using System.Threading.Tasks;
 namespace HotelBooking.API.Controllers
 {
     [Authorize]
-    public class BookingController : BaseController
+    public class BookingController : DefaultBaseController
     {
         private readonly IBookingService _bookingService;
         private readonly IRoomService _roomService;
-
         public BookingController(IBookingService bookingService,
             IRoomService roomService)
         {
             _bookingService = bookingService;
             _roomService = roomService;
         }
+
+        //[HttpGet("test")]
+        //public async Task<BookingDTO> TestAutomapper()
+        //{
+        //    var booking = new Bookings(10);
+        //    var dto = _mapper.Map<BookingDTO>(booking);
+        //    return dto;
+        //}
+
 
         // GET: api/Bookings/bydate/02-02-2021
         [HttpGet("bydate/{date}")]

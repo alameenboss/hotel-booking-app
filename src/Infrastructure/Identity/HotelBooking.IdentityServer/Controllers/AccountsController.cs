@@ -3,6 +3,7 @@ using HotelBooking.API.DTO.Auth;
 using HotelBooking.API.JwtFeatures;
 using HotelBooking.EmailService.Interface;
 using HotelBooking.EmailService.Model;
+using HotelBooking.Web.Common.Controllers;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
@@ -13,19 +14,16 @@ using System.Threading.Tasks;
 
 namespace HotelBooking.API.Controllers
 {
-    [Route("api/accounts")]
-    [ApiController]
-    public class AccountsController : ControllerBase
+
+    public class AccountsController : DefaultBaseController
     {
         private readonly UserManager<IdentityUser> _userManager;
-        private readonly IMapper _mapper;
         private readonly JwtHandler _jwtHandler;
         private readonly IEmailSender _emailSender;
 
-        public AccountsController(UserManager<IdentityUser> userManager, IMapper mapper, JwtHandler jwtHandler, IEmailSender emailSender)
+        public AccountsController(UserManager<IdentityUser> userManager, JwtHandler jwtHandler, IEmailSender emailSender)
         {
             _userManager = userManager;
-            _mapper = mapper;
             _jwtHandler = jwtHandler;
             _emailSender = emailSender;
         }

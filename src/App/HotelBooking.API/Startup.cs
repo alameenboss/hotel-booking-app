@@ -2,14 +2,13 @@ using AutoMapper;
 using HotelBooking.API.Extensions;
 using HotelBooking.Data.Repository.Extensions;
 using HotelBooking.Web.Common;
+using HotelBooking.Web.Common.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using NLog;
-using System.IO;
 
 namespace HotelBooking.API
 {
@@ -27,8 +26,8 @@ namespace HotelBooking.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.RegisterDefaultConfiguration(Configuration);
+            services.ConfigureAuthentication(Configuration);
             services.RegisterBusinessService(Configuration);
-            services.AddAutoMapper(typeof(Startup));
             services.AddControllers();
         }
 
@@ -46,6 +45,8 @@ namespace HotelBooking.API
             {
                 app.UseHsts();
             }
+
+            
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();

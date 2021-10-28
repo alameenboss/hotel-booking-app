@@ -1,7 +1,6 @@
-﻿using AutoMapper;
-using HotelBooking.API.DTO.Company;
+﻿using HotelBooking.API.DTO.Company;
 using HotelBooking.Data.Repository.Contracts;
-using HotelBooking.LoggerService.Interface;
+using HotelBooking.Web.Common.Controllers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -11,17 +10,13 @@ using System.Linq;
 namespace HotelBooking.API.Controllers
 {
     [Authorize]
-    public class CompanyController : BaseController
+    public class CompanyController : DefaultBaseController
     {
         private readonly IRepositoryManager _repository;
-        private readonly ILoggerManager _logger;
-        private readonly IMapper _mapper;
 
-        public CompanyController(IRepositoryManager repository, ILoggerManager logger, IMapper mapper)
+        public CompanyController(IRepositoryManager repository)
         {
             _repository = repository;
-            _logger = logger;
-            _mapper = mapper;
         }
 
         //[Authorize]

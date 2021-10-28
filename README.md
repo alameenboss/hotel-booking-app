@@ -54,10 +54,15 @@ Hotel Booking App is a web based hotel room reservation system.
 ## Migration commands
 
 ### Add Migration
-`Add-Migration -Name "RenamedColumns" -OutputDir "EFCore\Migrations" -Project "HotelBooking.Data.Repository"`
+* Install Package in the API Project `Microsoft.EntityFrameworkCore.Design`
+* Make sure to set your web project as Set as Startup Project
+* In Package Manager Console, set your data access layer (if any) as a default project
+* Then run the below command
+`Add-Migration -Name "Initial" -OutputDir "Migrations" -Project "HotelBooking.Data.EFCore" -Context "ApplicationDbContext"`
 
-### Add Migration
-`Update-Database`
+### Update Database
+* Install Package in the API Project `Microsoft.EntityFrameworkCore.Tools`
+* Then run the below command `Update-Database`
 
 ## Screens
 
