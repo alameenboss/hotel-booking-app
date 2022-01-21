@@ -1,24 +1,22 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { environment } from 'src/environments/environment';
+import { roomBookingUrl } from 'src/app/shared/apiEndPoints';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BookingService {
 
-  baseUrl;
   constructor(private httpClient: HttpClient) {
-    this.baseUrl = environment.urlAddress + '/api/bookings';
   }
 
   getbydate(date): Observable<any> {
-    return this.httpClient.get(`${this.baseUrl}/bydate/${date}`);
+    return this.httpClient.get(`${roomBookingUrl}/bydate/${date}`);
   }
 
   checkavailable(roomType,startdate,enddate): Observable<any> {
-    return this.httpClient.get(`${this.baseUrl}/checkavailable/${roomType}/${startdate}/${enddate}`);
+    return this.httpClient.get(`${roomBookingUrl}/checkavailable/${roomType}/${startdate}/${enddate}`);
   }
 
   checkavailablefake(roomType,startdate,enddate): Observable<any> {
@@ -34,11 +32,11 @@ export class BookingService {
   }
 
   bookRoom(data): Observable<any> {
-    return this.httpClient.post(this.baseUrl, data);
+    return this.httpClient.post(roomBookingUrl, data);
   }
 
   getMyBooking(userId): Observable<any> {
-    return this.httpClient.get(`${this.baseUrl}/mybooking/${userId}`);
+    return this.httpClient.get(`${roomBookingUrl}/mybooking/${userId}`);
   }
 
 }

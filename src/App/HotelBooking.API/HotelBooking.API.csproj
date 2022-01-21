@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+	<PropertyGroup>
+		<TargetFramework>netcoreapp3.1</TargetFramework>
+	</PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.15">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\..\Core\HotelBooking.Domain\HotelBooking.Domain.csproj" />
+		<ProjectReference Include="..\..\HotelBooking.Web.Common\HotelBooking.Web.Common.csproj" />
+		<ProjectReference Include="..\HotelBooking.Service\HotelBooking.Service.csproj" />
+	</ItemGroup>
+</Project>

@@ -1,15 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { environment } from 'src/environments/environment';
+import { companyUrl } from '../apiEndPoints';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AppService {
-  apiUri;
   constructor(public httpClient: HttpClient) {
-    this.apiUri = environment.urlAddress + '/api';
+
   }
 
   getDeals(): Observable<any> {
@@ -48,7 +47,7 @@ export class AppService {
   }
 
   public getClaims = () => {
-    const url = `${this.apiUri}/companies/privacy`
+    const url = `${companyUrl}/privacy`
     return this.httpClient.get(url);
   }
 

@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  urlAddress:'https://localhost:5001'
+  apiUrl:'https://localhost:5001',
+  identityServerUrl:'https://localhost:6001'
 };
 
 /*
