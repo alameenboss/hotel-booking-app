@@ -3,6 +3,33 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  .header-wrapper {
+    display: flex;
+    position: absolute;
+    top: 0;
+    right: 0;
+    color: #fff;
+    justify-content: space-between;
+    width: 100%;
+    align-items: baseline;
+    .logo {
+      font-size: x-large;
+      font-weight: 700;
+      padding: 10px;
+      margin: 10px;
+      cursor: pointer;
+    }
+    .sign-in {
+      font-weight: 500;
+      display: flex;
+      justify-content: space-evenly;
+      div{
+        padding: 10px;
+        margin: 10px;
+        cursor: pointer;
+      }
+    }
+  }
 }
 
 .bg-image {
@@ -27,7 +54,7 @@
   background-color: #000;
 }
 h1,
-h4 {
+h2 {
   font-family: "Dancing Script", cursive;
   color: #fff;
   text-align: center;
@@ -50,29 +77,4 @@ h1 {
   }
 }
 
-.header-wrapper {
-  display: flex;
-  position: absolute;
-  top: 0;
-  right: 0;
-  color: #fff;
-  justify-content: space-between;
-  width: 100%;
-  align-items: baseline;
-  .logo {
-    font-size: x-large;
-    font-weight: 700;
-    padding: 10px;
-    margin: 10px;
-  }
-  .sign-in {
-    font-weight: 500;
-    display: flex;
-    justify-content: space-evenly;
-    div{
-      padding: 10px;
-      margin: 10px;
-      cursor: pointer;
-    }
-  }
-}
+

@@ -12,6 +12,7 @@ import { TwoStepVerificationComponent } from './components/two-step-verification
 import { MaterialModule } from '../shared/modules/material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { AuthGuard } from './guards/auth.guard';
+import { AuthDefaultComponent } from './components/auth-default/auth-default.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { AuthGuard } from './guards/auth.guard';
     ResetPasswordComponent,
     EmailConfirmationComponent,
     TwoStepVerificationComponent,
-    ProfileComponent
+    ProfileComponent,
+    AuthDefaultComponent
   ],
   imports: [
     CommonModule,
@@ -30,13 +32,17 @@ import { AuthGuard } from './guards/auth.guard';
     FlexLayoutModule,
     ReactiveFormsModule,
     RouterModule.forChild([
-      { path: 'register', component: RegisterUserComponent },
-      { path: 'login', component: LoginComponent },
-      { path: 'forgotpassword', component: ForgotPasswordComponent },
-      { path: 'resetpassword', component: ResetPasswordComponent, canActivate: [AuthGuard] },
-      { path: 'emailconfirmation', component: EmailConfirmationComponent },
-      { path: 'twostepverification', component: TwoStepVerificationComponent },
-      { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]  }
+      {
+        path: '', component: AuthDefaultComponent, children: [
+          { path: 'register', component: RegisterUserComponent },
+          { path: 'login', component: LoginComponent },
+          { path: 'forgotpassword', component: ForgotPasswordComponent },
+          { path: 'resetpassword', component: ResetPasswordComponent, canActivate: [AuthGuard] },
+          { path: 'emailconfirmation', component: EmailConfirmationComponent },
+          { path: 'twostepverification', component: TwoStepVerificationComponent },
+          { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] }
+        ]
+      }
     ])
   ]
 })

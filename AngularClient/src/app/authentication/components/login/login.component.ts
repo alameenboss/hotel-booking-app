@@ -20,8 +20,8 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private notifierService: NotifierService,
-    private _authService: AuthenticationService, 
-    private _router: Router, 
+    private _authService: AuthenticationService,
+    private _router: Router,
     private _route: ActivatedRoute) { }
 
   ngOnInit(): void {
@@ -52,8 +52,8 @@ export class LoginComponent implements OnInit {
     this.notifierService.info('Checking User Info');
     this._authService.loginUser('api/accounts/login', userForAuth)
       .subscribe(res => {
-        
-        this.notifierService.showNotification('Logged In','Ok','success');
+
+        this.notifierService.showNotification('Logged In', 'Ok', 'success');
         if (res.is2StepVerificationRequired) {
           this._router.navigate(['/authentication/twostepverification'],
             { queryParams: { returnUrl: this._returnUrl, provider: res.provider, email: userForAuth.email } });
@@ -63,54 +63,58 @@ export class LoginComponent implements OnInit {
           this._authService.sendAuthStateChangeNotification(res.isAuthSuccessful);
           this._router.navigate([this._returnUrl]);
         }
-        
+
       },
         (error) => {
-          
-          this.notifierService.showNotification('Unable to Login','Ok','error');
-          
+
+          this.notifierService.showNotification('Unable to Login', 'Ok', 'error');
+
           this.errorMessage = error;
           this.showError = true;
         })
   }
 
-  public externalLogin = () => {
+  public externalLogin = (provider: string) => {
     this.showError = false;
     this.notifierService.info('Checking User Info');
-    
-    this._authService.signInWithGoogle()
+
+    if(provider == 'google'){
+      this._authService.signInWithGoogle()
       .then(res => {
         const user: SocialUser = { ...res };
         const externalAuth: ExternalAuthDto = {
           provider: user.provider,
           idToken: user.idToken
         }
-        
+
         this.validateExternalAuth(externalAuth);
       }, error => {
-          
-          this.notifierService.showNotification('Unable to Login','Ok','error');
-          
+        this.notifierService.showNotification('Unable to Login', 'Ok', 'error');
       })
+    }
+    else{
+      this.notifierService.showNotification('Provider not supported','Ok','error');
+    }
+    
   }
 
   private validateExternalAuth(externalAuth: ExternalAuthDto) {
     this.notifierService.info('Validating Login');
     this._authService.externalLogin('api/accounts/externallogin', externalAuth)
       .subscribe(res => {
-        this.notifierService.showNotification('Logged In','Ok',"success");
-        
+        this.notifierService.showNotification('Logged In', 'Ok', "success");
+
         localStorage.setItem("token", res.token);
         this._authService.sendAuthStateChangeNotification(res.isAuthSuccessful);
-        
+
         this._router.navigate([this._returnUrl]);
       },
         error => {
           this.errorMessage = error;
           this.showError = true;
-          
-          this.notifierService.showNotification('Unable to Login','Ok','error');
-          
+
+          this.notifierService.showNotification('Unable to Login', 'Ok', 'error');
+
           this._authService.signOutExternal();
         });
   }

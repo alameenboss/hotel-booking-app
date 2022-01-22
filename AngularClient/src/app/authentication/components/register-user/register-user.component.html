@@ -1,7 +1,10 @@
 <mat-card>
+    <mat-toolbar color="primary">
+        Register
+    </mat-toolbar>
+    <p></p>
     <mat-card-content>
         <form [formGroup]="registerForm" autocomplete="off" novalidate (ngSubmit)="registerUser(registerForm.value)">
-            <h2>Register</h2>
             <mat-error *ngIf="showError">
                 <span [innerHTML]="errorMessage"></span>
             </mat-error>

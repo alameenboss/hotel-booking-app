@@ -2,7 +2,7 @@
     <div class="bg-image" style="background-image:url(assets/img/background02.jpg)">
     </div>
     <div class="header-wrapper">
-        <span class="logo">Hotel Booking</span>
+        <span [routerLink]="['/']" class="logo">Prestige Villa</span>
         <div class="sign-in">
             <div [routerLink]="['/authentication/login']" routerLinkActive="active"
                 [routerLinkActiveOptions]="{exact: true}">
@@ -16,9 +16,8 @@
     </div>
 
     <div fxLayout="column" fxLayoutAlign="center center">
-        <h1 class="mat-h1">Welcome To Hotel Booking</h1>
-        <h4>Nec solet elaboraret eu, ea usu vidit accusam. Ea per legimus singulis
-            percipitur. Graecis ullamcorper nec ex, vix euismod detraxit voluptaria at.</h4>
+        <h1 class="mat-h1">Welcome to Prestige Villa</h1>
+        <h2>Discover the joy again</h2>
         <mat-card>
             <mat-card-content>
                 <form [formGroup]="regiForm" (ngSubmit)="searchRoom()">

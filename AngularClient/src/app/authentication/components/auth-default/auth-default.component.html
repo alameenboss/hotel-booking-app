@@ -1,0 +1,18 @@
+<div id="home">
+    <div class="bg-image" style="background-image:url(assets/img/background02.jpg)">
+    </div>
+    <div class="header-wrapper">
+        <span [routerLink]="['/']" class="logo">Prestige Villa</span>
+        <div class="sign-in">
+            <div [routerLink]="['/authentication/login']" routerLinkActive="active"
+                [routerLinkActiveOptions]="{exact: true}">
+                Login
+            </div>
+            <div [routerLink]="['/authentication/register']" routerLinkActive="active"
+                [routerLinkActiveOptions]="{exact: true}">
+                Sign Up
+            </div>
+        </div>
+    </div>
+    <router-outlet></router-outlet>
+</div>
