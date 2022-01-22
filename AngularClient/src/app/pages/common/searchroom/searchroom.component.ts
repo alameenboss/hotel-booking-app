@@ -29,12 +29,10 @@ export class SearchRoomComponent {
     this._bookingService
       .checkavailablefake(this.type, this.from, this.to)
       .subscribe(data => {
-        console.log(data);
         if (data != null) {
           this.roomList = data;
         }
       }, err => {
-        console.log(err)
         this.notifierService.showNotification('Error Occured!', 'Ok', "error");
       })
   }

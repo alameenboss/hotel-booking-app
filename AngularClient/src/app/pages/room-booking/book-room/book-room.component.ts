@@ -53,12 +53,10 @@ export class BookRoomComponent implements OnInit {
     this._bookingService
       .checkavailable(this.regiForm.value.RoomType, this.formateDate(this.regiForm.value.FromDate), this.formateDate(this.regiForm.value.ToDate))
       .subscribe(data => {
-        console.log(data);
         if (data != null) {
           this.roomList = data;
         }
       }, err => {
-        console.log(err)
         this.notifierService.showNotification('Error Occured!', 'Ok', "error");
       })
   }
@@ -74,17 +72,11 @@ export class BookRoomComponent implements OnInit {
     this._bookingService.bookRoom(data)
       .subscribe(
         response => {
-          console.log(response);
-
           this.notifierService.showNotification('Room Booked Successfully', 'Ok', 'success');
-
           this.searchRoom();
         },
         error => {
-          console.log(error);
-
           this.notifierService.showNotification('Room Not Booked', 'Ok', 'error');
-
         });
   }
 

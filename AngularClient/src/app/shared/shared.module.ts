@@ -11,7 +11,6 @@ import { RouterModule } from '@angular/router';
 import { NavigationComponent } from './navigation/navigation.component';
 import { LoaderComponent } from './loader/loader.component';
 
-
 @NgModule({
   imports: [
     CommonModule,
@@ -23,7 +22,11 @@ import { LoaderComponent } from './loader/loader.component';
     BrowserAnimationsModule,
     BrowserModule
   ],
-  declarations: [NavigationComponent,NotifierComponent,LoaderComponent],
+  declarations: [
+    NavigationComponent,
+    NotifierComponent,
+    LoaderComponent
+  ],
   exports: [NavigationComponent,NotifierComponent,LoaderComponent]
 })
 export class SharedModule { }

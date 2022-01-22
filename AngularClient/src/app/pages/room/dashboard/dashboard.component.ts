@@ -65,12 +65,10 @@ export class DashboardComponent {
     this._bookingService
       .getbydate(this.formateDate(this.regiForm.value.BookingDate))
       .subscribe(data => {
-        console.log(data);
         if (data != null) {
           this.setDataSource(data)
         }
       }, err => {
-        console.log(err)
       })
   }
 

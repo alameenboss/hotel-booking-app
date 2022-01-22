@@ -1,5 +1,6 @@
 <app-loader></app-loader>
-<div class="mat-app-background" [ngClass]="{'dark-theme-mode':isDarkTheme}">
+
+<div class="mat-app-background" [ngClass]="{'dark-theme-mode':isDarkTheme}" *ngIf='isUserAuthenticated'>
   <mat-toolbar color="primary">
     <div>
       <button mat-icon-button (click)="sidenav.toggle()">
@@ -7,36 +8,12 @@
       </button>
     </div>
     <div>
-      <a [routerLink]="['default/home']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+      <a [routerLink]="['room/dashboard']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
         Hotel Booking
       </a>
     </div>
 
     <div fxFlex fxLayout fxLayoutAlign="flex-end center" fxLayoutGap="10px">
-      <!-- <ul *ngIf="!isUserAuthenticated" fxLayout fxLayoutGap="10px" class="navigation-items" fxHide.xs>
-        <li>
-          <a [routerLink]="['/authentication/login']" routerLinkActive="active"
-            [routerLinkActiveOptions]="{exact: true}" fxLayout fxLayoutAlign="center center" fxLayoutGap="5px">
-            <mat-icon>vpn_key</mat-icon>
-            <span>Login</span>
-          </a>
-        </li>
-        <li>
-          <a [routerLink]="['/authentication/register']" routerLinkActive="active"
-            [routerLinkActiveOptions]="{exact: true}" fxLayout fxLayoutAlign="center center" fxLayoutGap="5px">
-            <mat-icon>contacts</mat-icon>
-            <span>Register</span>
-          </a>
-        </li>
-      </ul>
-      <ul *ngIf="isUserAuthenticated" fxLayout fxLayoutGap="10px" class="navigation-items" fxHide.xs>
-        <li>
-          <a (click)="logout()" type="button" fxLayout fxLayoutAlign="center center" fxLayoutGap="5px">
-            <mat-icon>input</mat-icon>
-            <span>LogOut</span>
-          </a>
-        </li>
-      </ul> -->
       <div fxLayout fxLayoutAlign="flex-end" fxLayoutGap="10px">
         <mat-slide-toggle [(ngModel)]="isDarkTheme" labelPosition="before" (change)="storeThemeSelection()">
           <mat-icon>bedtime</mat-icon>
@@ -48,15 +25,16 @@
   </mat-toolbar>
 </div>
 
-<mat-sidenav-container class="mat-app-background" [ngClass]="{'dark-theme-mode':isDarkTheme}">
+<mat-sidenav-container class="mat-app-background" [ngClass]="{'dark-theme-mode':isDarkTheme}"
+  [ngClass]="{'full-height':!isUserAuthenticated}">
   <mat-sidenav #sidenav class="mat-elevation-z8" [mode]="(isHandset$ | async) ? 'over':'side'"
-    [opened]='isUserAuthenticated' role="navigation">
+    [opened]='isUserAuthenticated' role="navigation" [ngClass]="{'full-height':!isUserAuthenticated}">
     <mat-nav-list *ngIf='!isUserAuthenticated'>
-      <a mat-list-item  class="mat-menu-link" [routerLink]="['/authentication/login']" routerLinkActive="active">
+      <a mat-list-item class="mat-menu-link" [routerLink]="['/authentication/login']" routerLinkActive="active">
         <mat-icon>vpn_key</mat-icon>
         <span>Login</span>
       </a>
-      <a mat-list-item  class="mat-menu-link" [routerLink]="['/authentication/register']" routerLinkActive="active"
+      <a mat-list-item class="mat-menu-link" [routerLink]="['/authentication/register']" routerLinkActive="active"
         [routerLinkActiveOptions]="{exact: true}">
         <mat-icon>contacts</mat-icon>
         <span>Register</span>
@@ -77,21 +55,20 @@
           <span>{{menu.title}}</span>
         </a>
         <a mat-list-item class="mat-menu-link"
-         *ngIf='isUserAuthenticated && (menu.role == "admin" || menu.role == "member")'
-          routerLink={{menu.path}} routerLinkActive="active"
-           [routerLinkActiveOptions]="{exact: true}">
+          *ngIf='isUserAuthenticated && (menu.role == "admin" || menu.role == "member")' routerLink={{menu.path}}
+          routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
           <mat-icon>{{menu.icon}}</mat-icon>
           <span>{{menu.title}}</span>
         </a>
       </ng-container>
       <mat-divider *ngIf='isUserAuthenticated'></mat-divider>
-      <a mat-list-item *ngIf='isUserAuthenticated' (click)="logout()">
+      <a mat-list-item class="mat-menu-link" *ngIf='isUserAuthenticated' routerLinkActive="active" (click)="logout()">
         <mat-icon>input</mat-icon>
-        <span>LogOut</span>
+        <span>Log out</span>
       </a>
     </mat-nav-list>
   </mat-sidenav>
-  <mat-sidenav-content>
+  <mat-sidenav-content [ngClass]="{'full-height':!isUserAuthenticated}">
     <main class="main">
       <router-outlet></router-outlet>
     </main>

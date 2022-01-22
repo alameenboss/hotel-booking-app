@@ -1,6 +1,20 @@
 <div id="home">
     <div class="bg-image" style="background-image:url(assets/img/background02.jpg)">
     </div>
+    <div class="header-wrapper">
+        <span class="logo">Hotel Booking</span>
+        <div class="sign-in">
+            <div [routerLink]="['/authentication/login']" routerLinkActive="active"
+                [routerLinkActiveOptions]="{exact: true}">
+                Login
+            </div>
+            <div [routerLink]="['/authentication/register']" routerLinkActive="active"
+                [routerLinkActiveOptions]="{exact: true}">
+                Sign Up
+            </div>
+        </div>
+    </div>
+
     <div fxLayout="column" fxLayoutAlign="center center">
         <h1 class="mat-h1">Welcome To Hotel Booking</h1>
         <h4>Nec solet elaboraret eu, ea usu vidit accusam. Ea per legimus singulis

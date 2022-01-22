@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace HotelBooking.Data.Repository.EFCore.Configuration
 {
-    public class CompanyConfiguration : IEntityTypeConfiguration<Company>
+    public class BookingConfiguration : IEntityTypeConfiguration<Booking>
     {
-        public void Configure(EntityTypeBuilder<Company> builder)
+        public void Configure(EntityTypeBuilder<Booking> builder)
         {
         }
     }

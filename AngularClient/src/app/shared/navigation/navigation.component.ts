@@ -43,7 +43,6 @@ export class NavigationComponent {
     this.isMember = this._authService.isUserMember();
     this.isAdmin = this._authService.isUserAdmin();
     this.loadMenu();
-    console.log(new Date())
   }
 
 
@@ -76,19 +75,10 @@ export class NavigationComponent {
   loadMenu() {
 
     const menu = [
-      //{ "icon": "home", "path": "/default//home", "title": "Home" },
-      //{ "icon": "security", "path": "/default/privacy", "title": "Privacy", "role": "admin" },
-      //{ "icon": "dashboard", "path": "/default/landing", "title": "Landing"},
-      //{ "icon": "build", "path": "/default/welcome", "title": "Welcome" },
-      //{ "icon": "account_box", "path": "/authentication/profile", "title": "Account", "role": "admin" },
-      //{ "icon": "business", "path": "/company/companies", "title": "Companies", "role": "admin" },
       { "icon": "local_hotel", "path": "roombooking/book-room", "title": "Book Room", "role": "member" },
       { "icon": "room", "path": "room/dashboard", "title": "Dashboard", "role": "admin" },
       { "icon": "local_hotel", "path": "room/room-list", "title": "Rooms", "role": "admin" },
-      { "icon": "pages", "path": "game", "title": "Flip Card Game" },
-      //{ "icon": "pages", "path": "post", "title": "Posts" },
       { "icon": "person", "path": "user", "title": "Users", "role": "admin" },
-      //{ "icon": "ac_unit", "path": "ui", "title": "UI"},
     ];
 
     const _role = this.isAdmin ? "admin" : this.isMember ? "member" : "";

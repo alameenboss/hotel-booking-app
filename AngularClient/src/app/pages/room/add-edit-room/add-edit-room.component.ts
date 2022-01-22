@@ -39,12 +39,10 @@ export class AddEditRoomComponent implements OnInit {
         if (data != null) {
           this.isEditMode = true;
           this.room = data;
-          console.log(data);
         }
 
       },
         error => {
-          console.log(error);
         });
     }
   }
@@ -58,12 +56,10 @@ export class AddEditRoomComponent implements OnInit {
     this.roomService.createNew(data)
       .subscribe(
         response => {
-          console.log(response);
           this.submitted = true;
           this.notifierService.showNotification(`Room created successfully!`, 'Ok', "success");
         },
         error => {
-          console.log(error);
           this.notifierService.showNotification('Error Occured!', 'Ok', "error");
         });
   }
@@ -74,14 +70,10 @@ export class AddEditRoomComponent implements OnInit {
       .subscribe(
         response => {
           this.submitted = true;
-          console.log(response);
           this.notifierService.showNotification(`The room was updated!`, 'Ok', "success");
         },
         error => {
-          console.log(error);
-
           this.notifierService.showNotification('Error Occured!', 'Ok', "error");
-
         });
   }
   deleteRoom(): void {
@@ -89,14 +81,10 @@ export class AddEditRoomComponent implements OnInit {
     this.roomService.delete(this.room.id)
       .subscribe(
         response => {
-          console.log(response);
           this.router.navigateByUrl(`room/room-list`);
         },
         error => {
-          console.log(error);
-
           this.notifierService.showNotification('Error Occured!', 'Ok', "error");
-
         });
   }
   roomList() {

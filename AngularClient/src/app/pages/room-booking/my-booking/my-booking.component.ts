@@ -45,13 +45,11 @@ export class MyBookingComponent implements OnInit {
     this._bookingService
       .getMyBooking(this.currentUserId)
       .subscribe(data => {
-        console.log(data);
         if (data != null) {
           this.setDataSource(data)
         }
       },
         error => {
-          console.log(error);
           this.notifierService.showNotification('Room Not Booked', 'Ok', 'error');
         })
   }

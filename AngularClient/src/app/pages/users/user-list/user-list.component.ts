@@ -48,12 +48,10 @@ export class UserListComponent implements OnInit {
     this._userService
       .getalluser()
       .subscribe(data => {
-        console.log(data);
         if (data != null) {
           this.setDataSource(data)
         }
       }, err => {
-        console.log(err)
         this.notifierService.showNotification('Error Occured!', 'Ok', "error");
       })
   }
@@ -62,11 +60,9 @@ export class UserListComponent implements OnInit {
     this._userService.makeuseradmin(userId)
       .subscribe(
         response => {
-          console.log(response);
           this.notifierService.showNotification('User is now Admin', 'Ok', "success");
         },
         error => {
-          console.log(error);
           this.notifierService.showNotification('Not able to make user admin!', 'Ok', "error");
         });
   }

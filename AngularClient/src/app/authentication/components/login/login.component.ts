@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit {
       password: new FormControl("Test@123", [Validators.required])
     })
 
-    this._returnUrl = this._route.snapshot.queryParams['returnUrl'] || '/';
+    this._returnUrl = this._route.snapshot.queryParams['returnUrl'] || '/room/dashboard';
   }
 
   public validateControl = (controlName: string) => {
@@ -67,7 +67,6 @@ export class LoginComponent implements OnInit {
       },
         (error) => {
           
-          console.log(error);
           this.notifierService.showNotification('Unable to Login','Ok','error');
           
           this.errorMessage = error;
@@ -82,7 +81,6 @@ export class LoginComponent implements OnInit {
     this._authService.signInWithGoogle()
       .then(res => {
         const user: SocialUser = { ...res };
-        console.log(user);
         const externalAuth: ExternalAuthDto = {
           provider: user.provider,
           idToken: user.idToken
@@ -91,7 +89,6 @@ export class LoginComponent implements OnInit {
         this.validateExternalAuth(externalAuth);
       }, error => {
           
-          console.log(error);
           this.notifierService.showNotification('Unable to Login','Ok','error');
           
       })
@@ -112,7 +109,6 @@ export class LoginComponent implements OnInit {
           this.errorMessage = error;
           this.showError = true;
           
-          console.log(error);
           this.notifierService.showNotification('Unable to Login','Ok','error');
           
           this._authService.signOutExternal();
