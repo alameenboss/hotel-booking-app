@@ -25,6 +25,7 @@ namespace HotelBooking.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.RegisterDefaultConfiguration(Configuration);
+            services.ConfigureSwagger("Hotel Booking Identity Server", "v1");
             services.AddAutoMapper(typeof(Startup));
             services.ConfigureIdentity(Configuration);
             services.AddControllers();

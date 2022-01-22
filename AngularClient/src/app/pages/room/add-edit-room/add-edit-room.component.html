@@ -1,44 +1,28 @@
-<div fxLayout="row" fxLayoutAlign="center center">
-    <mat-card>
-        <mat-card-title>
-            {{title}}
-        </mat-card-title>
-        <mat-card-content>
-            <div fxLayout="row" fxLayoutAlign="end stretch" fxLayoutGap="20px">
-                <button mat-raised-button color="accent" *ngIf="!isEditMode" (click)="newRoom()">New Room</button>
-                <button mat-raised-button color="accent" (click)="roomList()">Back</button>
-            </div>
-        </mat-card-content>
-    </mat-card>
-</div>
-<p>
-    <br>
-</p>
-<div fxLayout="row" fxLayoutAlign="center center">
-    <mat-card>
-        <mat-card-content>
-            <div fxLayout="column" fxLayoutAlign="flex-start stretch" fxLayoutGap="20px">
-                <mat-form-field>
-                    <mat-label>Room Number</mat-label>
-                    <input matInput required [(ngModel)]="room.name" placeholder="F-101">
-                    <mat-error *ngIf="room.name==null">Enter Room Number</mat-error>
-                </mat-form-field>
-                <mat-form-field appearance="fill">
-                    <mat-label>Room Type</mat-label>
-                    <mat-select [(ngModel)]="room.type">
-                        <mat-option>Clear</mat-option>
-                        <mat-option value="Single">Single</mat-option>
-                        <mat-option value="Double">Double</mat-option>
-                    </mat-select>
-                    <mat-error *ngIf="room.type==null">You must make a selection</mat-error>
-                </mat-form-field>
-            </div>
-            <div fxLayout="row" fxLayoutAlign="flex-start" fxLayoutGap="20px" style="margin-top: 20px;">
-                <button mat-raised-button color="primary" (click)="createRoom()" *ngIf="!isEditMode">Create New
-                    Room</button>
-                <button mat-raised-button color="accent" (click)="deleteRoom()" *ngIf="isEditMode">Delete Room</button>
-                <button mat-raised-button color="primary" (click)="updateRoom()" *ngIf="isEditMode">Update Room</button>
-            </div>
-        </mat-card-content>
-    </mat-card>
-</div>
+<h2 mat-dialog-title> {{title}}</h2>
+<mat-dialog-content>
+    <div fxLayout="column" fxLayoutAlign="flex-start stretch" fxLayoutGap="20px">
+        <mat-form-field>
+            <mat-label>Room Number</mat-label>
+            <input matInput required [(ngModel)]="room.name" placeholder="F-101">
+            <mat-error *ngIf="room.name==null">Enter Room Number</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Room Type</mat-label>
+            <mat-select [(ngModel)]="room.type">
+                <mat-option>Clear</mat-option>
+                <mat-option value="Single">Single</mat-option>
+                <mat-option value="Double">Double</mat-option>
+            </mat-select>
+            <mat-error *ngIf="room.type==null">You must make a selection</mat-error>
+        </mat-form-field>
+    </div>
+
+
+</mat-dialog-content>
+
+<mat-dialog-actions>
+    <button mat-raised-button color="accent" (click)="close()">Close</button>
+    <button mat-raised-button color="primary" (click)="createRoom()" *ngIf="!isEditMode">Create New
+        Room</button>
+    <button mat-raised-button color="primary" (click)="updateRoom()" *ngIf="isEditMode">Update Room</button>
+</mat-dialog-actions>

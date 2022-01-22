@@ -44,6 +44,7 @@ namespace HotelBooking.Service.Implementation
             return await _repository
                 .Bookings
                 .FindByCondition(x => x.UserId == userId, true)
+                .Include(r=>r.Room)
                 .ToListAsync();
         }
 

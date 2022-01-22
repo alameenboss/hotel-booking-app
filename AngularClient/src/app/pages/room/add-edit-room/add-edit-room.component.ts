@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NotifierService } from 'src/app/shared/notifier/notifier.service';
 import { RoomService } from 'src/app/pages/room/room.service';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-add-edit-room',
@@ -19,11 +20,13 @@ export class AddEditRoomComponent implements OnInit {
   roomId: number = 0;
   isEditMode: boolean = false;
   constructor(
-
     private notifierService: NotifierService,
-    private router: Router,
-    private route: ActivatedRoute,
-    private roomService: RoomService) { }
+    private dialogRef: MatDialogRef<AddEditRoomComponent>,
+    @Inject(MAT_DIALOG_DATA) data,
+    private roomService: RoomService) {
+
+    this.roomId = parseInt(data.id);
+  }
 
   ngOnInit(): void {
     this.getRoomDetails();
@@ -31,7 +34,7 @@ export class AddEditRoomComponent implements OnInit {
 
   getRoomDetails() {
 
-    this.roomId = parseInt(this.route.snapshot.paramMap.get('id'));
+
     if (this.roomId > 0) {
       this.title = `Edit Room - ${this.roomId}`;
       this.roomService.getById(this.roomId).subscribe(data => {
@@ -57,6 +60,7 @@ export class AddEditRoomComponent implements OnInit {
       .subscribe(
         response => {
           this.submitted = true;
+          this.dialogRef.close(response);
           this.notifierService.showNotification(`Room created successfully!`, 'Ok', "success");
         },
         error => {
@@ -70,33 +74,15 @@ export class AddEditRoomComponent implements OnInit {
       .subscribe(
         response => {
           this.submitted = true;
+          this.dialogRef.close(response);
           this.notifierService.showNotification(`The room was updated!`, 'Ok', "success");
         },
         error => {
           this.notifierService.showNotification('Error Occured!', 'Ok', "error");
         });
   }
-  deleteRoom(): void {
 
-    this.roomService.delete(this.room.id)
-      .subscribe(
-        response => {
-          this.router.navigateByUrl(`room/room-list`);
-        },
-        error => {
-          this.notifierService.showNotification('Error Occured!', 'Ok', "error");
-        });
-  }
-  roomList() {
-    this.router.navigateByUrl(`room/room-list`);
-  }
-
-  newRoom(): void {
-    this.submitted = false;
-    this.room = {
-      id: 0,
-      name: '',
-      type: ''
-    };
+  close() {
+    this.dialogRef.close();
   }
 }

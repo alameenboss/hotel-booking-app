@@ -1,12 +1,16 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { MaterialModule } from 'src/app/shared/modules/material.module';
 import { MyBookingComponent } from './my-booking/my-booking.component';
 import { BookRoomComponent } from './book-room/book-room.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
+const routes: Routes = [
+  { path: 'book-room', component: BookRoomComponent, pathMatch: 'full', data: { title: 'Book Room' } },
+  { path: 'my-booking', component: MyBookingComponent, pathMatch: 'full', data: { title: 'My Booking' } }
+];
 @NgModule({
   declarations: [
     BookRoomComponent,
@@ -22,10 +26,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     ReactiveFormsModule,
     FormsModule,
     FlexLayoutModule,
-    RouterModule.forChild([
-      { path: 'book-room', component: BookRoomComponent, pathMatch: 'full', data: { title: 'Book Room' } },
-      { path: 'my-booking', component: MyBookingComponent, pathMatch: 'full', data: { title: 'My Booking' } }
-    ])
+    RouterModule.forChild(routes)
   ]
 })
 export class RoomBookingModule { }

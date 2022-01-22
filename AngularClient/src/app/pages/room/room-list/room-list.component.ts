@@ -5,6 +5,8 @@ import { RoomService } from 'src/app/pages/room/room.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { AddEditRoomComponent } from '../add-edit-room/add-edit-room.component';
 
 export interface Room {
   id: number;
@@ -28,6 +30,7 @@ export class RoomListComponent implements OnInit {
   constructor(
     private notifierService: NotifierService,
     private router: Router,
+    private dialog: MatDialog,
     private roomService: RoomService) {
   }
 
@@ -57,12 +60,43 @@ export class RoomListComponent implements OnInit {
     }, () => this.notifierService.showNotification('Error Occured!', 'Ok', "error"))
   }
 
-  editRoom(roomnumber) {
-    this.router.navigateByUrl('room/edit-room/' + roomnumber)
+  editRoom(roomId: number) {
+    this.openDialog(roomId);
   }
 
   addRoom() {
-    this.router.navigateByUrl(`room/add-room`);
+    this.openDialog(0);
+  }
+
+  openDialog(roomId: number) {
+
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.data = {
+      id: roomId
+    };
+    const dialogRef = this.dialog.open(AddEditRoomComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe(
+      data => {
+        this.getRoomList();
+      }
+    );
+  }
+
+  deleteRoom(roomId: number): void {
+
+    this.roomService.delete(roomId)
+      .subscribe(
+        response => {
+          this.getRoomList();
+          this.notifierService.showNotification('Room deleted!', 'Ok', "success");
+        },
+        error => {
+          this.notifierService.showNotification('Error Occured!', 'Ok', "error");
+        });
   }
 }
 

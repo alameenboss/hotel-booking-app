@@ -73,8 +73,8 @@ namespace HotelBooking.API.Controllers
                     StartDate = item.StartDate,
                     EndDate = item.EndDate,
                     RoomId = item.Id,
-                    RoomName = "",
-                    Type = "",
+                    RoomName = item?.Room?.Name,
+                    Type = item?.Room?.Type,
                     UserId = item.UserId,
                     Status = "Booked"
                 };

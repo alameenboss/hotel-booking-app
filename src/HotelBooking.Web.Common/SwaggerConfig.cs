@@ -6,11 +6,11 @@ namespace HotelBooking.API.Extensions
 {
     public static class SwaggerConfig
     {
-        public static void ConfigureSwagger(this IServiceCollection services)
+        public static void ConfigureSwagger(this IServiceCollection services,string title,string version)
         {
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Hotel Booking", Version = "v1" });
+                c.SwaggerDoc(version, new OpenApiInfo { Title = title, Version = version });
 
                 var securitySchema = new OpenApiSecurityScheme
                 {

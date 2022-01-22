@@ -34,6 +34,8 @@ namespace HotelBooking.API
                    .Build();
 
             services.RegisterDefaultConfiguration(Configuration);
+
+            services.ConfigureSwagger("Hotel Booking API","v1");
             //services.ConfigureNLogService();
             services.ConfigureAuthentication(Configuration);
             services.RegisterBusinessService(Configuration);

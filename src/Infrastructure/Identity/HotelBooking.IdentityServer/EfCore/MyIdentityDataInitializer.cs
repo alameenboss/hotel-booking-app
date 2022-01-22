@@ -28,6 +28,15 @@ namespace HotelBooking.Data.Repository.EFCore
                     userManager.AddToRoleAsync(user, "Administrator").Wait();
                 }
             }
+            else
+            {
+                var user = userManager.FindByEmailAsync("superadmin@gmail.com").Result;
+                var isUserAnAdmin = userManager.IsInRoleAsync(user, "Administrator").Result;
+                if (!isUserAnAdmin)
+                {
+                    userManager.AddToRoleAsync(user, "Administrator").Wait();
+                }
+            }
         }
 
         public static void SeedRoles(RoleManager<IdentityRole> roleManager)
