@@ -18,14 +18,12 @@ namespace HotelBooking.API.Controllers
             _roomService = roomService;
         }
 
-        // GET: api/Rooms
         [HttpGet]
         public async Task<IEnumerable<Room>> GetRooms()
         {
             return await _roomService.GetAll();
         }
 
-        // GET: api/Rooms/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Room>> GetRoom(int id)
         {
@@ -39,9 +37,6 @@ namespace HotelBooking.API.Controllers
             return room;
         }
 
-        // PUT: api/Rooms/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
         public async Task<IActionResult> PutRoom(int id, Room room)
         {
@@ -55,9 +50,6 @@ namespace HotelBooking.API.Controllers
             return NoContent();
         }
 
-        // POST: api/Rooms
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
         public async Task<ActionResult<Room>> PostRoom(Room room)
         {
@@ -65,7 +57,6 @@ namespace HotelBooking.API.Controllers
             return CreatedAtAction("GetRoom", new { id = room.Id }, room);
         }
 
-        // DELETE: api/Rooms/5
         [HttpDelete("{id}")]
         public async Task<ActionResult<bool>> DeleteRoom(int id)
         {

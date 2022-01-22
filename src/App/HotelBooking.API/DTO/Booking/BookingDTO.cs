@@ -9,13 +9,4 @@ namespace HotelBooking.API.DTO.Booking
     {
         public int RoomId { get; set; }
     }
-
-    public class Bookings
-    {
-        public Bookings(int roomid)
-        {
-            RoomId = roomid;
-        }
-        public int RoomId { get; set; }
-    }
 }

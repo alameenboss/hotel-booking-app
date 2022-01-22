@@ -11,8 +11,6 @@ namespace HotelBooking.Data.Repository.Extensions
         {
             services.ConfigureApplicationContext(configuration);
             services.ConfigureRepositoryManager();
-
-            services.AddScoped<ICompanyService, CompanyService>();
             services.AddScoped<IBookingService, BookingService>();
             services.AddScoped<IRoomService, RoomService>();
         }

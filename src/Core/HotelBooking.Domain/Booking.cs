@@ -18,10 +18,7 @@ namespace HotelBooking.Domain
 
         public Room Room { get; set; }
 
-        //[ForeignKey(nameof(User))]
         [Required(ErrorMessage = "User is a required field.")]
         public string UserId { get; set; }
-
-        //public IdentityUser User { get; set; }
     }
 }

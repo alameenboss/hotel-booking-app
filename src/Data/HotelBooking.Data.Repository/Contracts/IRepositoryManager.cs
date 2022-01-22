@@ -6,7 +6,6 @@ namespace HotelBooking.Data.Repository.Contracts
     {
         IRoomRepository Room { get; }
         IBookingRepository Bookings { get; }
-
         Task Save();
     }
 }

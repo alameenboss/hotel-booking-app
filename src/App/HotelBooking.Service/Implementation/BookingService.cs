@@ -25,7 +25,9 @@ namespace HotelBooking.Service.Implementation
 
         public async Task<Booking> GetById(int Id)
         {
-            var result = await _repository.Bookings.GetById(Id);
+            var result = await _repository
+                .Bookings
+                .GetById(Id);
             return result;
         }
 
@@ -39,7 +41,10 @@ namespace HotelBooking.Service.Implementation
 
         public async Task<IEnumerable<Booking>> GetMyBooking(string userId)
         {
-            return await _repository.Bookings.FindByCondition(x => x.UserId == userId, true).ToListAsync();
+            return await _repository
+                .Bookings
+                .FindByCondition(x => x.UserId == userId, true)
+                .ToListAsync();
         }
 
         public async Task Create(Booking booking)

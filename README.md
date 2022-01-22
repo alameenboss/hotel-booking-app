@@ -123,7 +123,3 @@ Hotel Booking App is a web based hotel room reservation system.
 ### JWT_Authentication
 
 ![JWT_Authentication](./screens/API_02_JWT_Authentication.png)
-
-### Flip Card Game
-
-![Flip Card Game](./screens/11_Flip_Card_Game.png)
