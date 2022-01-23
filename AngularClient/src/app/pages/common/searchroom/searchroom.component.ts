@@ -22,19 +22,19 @@ export class SearchRoomComponent {
 
   }
   initForm() {
-    this.from = this.route.snapshot.paramMap.get('from');
-    this.to = this.route.snapshot.paramMap.get('to');
-    this.type = this.route.snapshot.paramMap.get('type');
+    // this.from = this.route.snapshot.paramMap.get('from');
+    // this.to = this.route.snapshot.paramMap.get('to');
+    // this.type = this.route.snapshot.paramMap.get('type');
 
-    this._bookingService
-      .checkavailablefake(this.type, this.from, this.to)
-      .subscribe(data => {
-        if (data != null) {
-          this.roomList = data;
-        }
-      }, err => {
-        this.notifierService.showNotification('Error Occured!', 'Ok', "error");
-      })
+    // this._bookingService
+    //   .checkavailablefake(this.type, this.from, this.to)
+    //   .subscribe(data => {
+    //     if (data != null) {
+    //       this.roomList = data;
+    //     }
+    //   }, err => {
+    //     this.notifierService.showNotification('Error Occured!', 'Ok', "error");
+    //   })
   }
 
 }

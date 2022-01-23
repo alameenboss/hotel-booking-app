@@ -1,4 +1,4 @@
-﻿using HotelBooking.API.DTO.Room;
+﻿using HotelBooking.API.Models.Room;
 using HotelBooking.Domain;
 using HotelBooking.Service.Contracts;
 using HotelBooking.Web.Common.Controllers;
@@ -23,36 +23,18 @@ namespace HotelBooking.API.Controllers
             _roomService = roomService;
         }
 
-        [HttpGet("bydate/{date}")]
-        public async Task<ActionResult<IEnumerable<RoomBookingDTO>>> GetBooking(DateTime date)
+        [HttpGet("{startdate}")]
+        public async Task<IEnumerable<RoomBookingResponse>> GetBooking(DateTime startdate)
         {
-            return Ok(await GetBookings(date, date));
-        }
-
-        [HttpGet("checkavailable/{roomType}/{startdate}/{enddate}")]
-        public async Task<ActionResult<IEnumerable<RoomBookingDTO>>> GetAvailabe(string roomType, DateTime startdate, DateTime enddate)
-        {
-            var allRooms = await GetBookings(startdate, enddate);
-            var availableRooms = allRooms.Where(x => x.Status == "Not Booked" && x.Type == roomType);
-            return Ok(availableRooms);
-        }
-
-        private async Task<IEnumerable<RoomBookingDTO>> GetBookings(DateTime startdate, DateTime enddate)
-        {
-            var booking = await _bookingService.GetBookings(startdate, enddate);
+            var booking = await _bookingService.GetBookingsByDate(startdate);
             var rooms = await _roomService.GetAll();
-            var roomsbookings = new List<RoomBookingDTO>();
+            var roomsbookings = new List<RoomBookingResponse>();
             foreach (var room in rooms)
             {
-                var roomsbooking = new RoomBookingDTO
+                var roomsbooking = new RoomBookingResponse
                 {
-                    BookingId = booking.FirstOrDefault(x => x.RoomId == room.Id)?.Id ?? 0,
-                    StartDate = startdate,
-                    EndDate = enddate,
-                    RoomId = room.Id,
                     RoomName = room.Name,
                     Type = room.Type,
-                    UserId = booking.FirstOrDefault(x => x.RoomId == room.Id)?.UserId ?? "",
                     Status = booking.Any(x => x.RoomId == room.Id) ? "Booked" : "Not Booked"
                 };
                 roomsbookings.Add(roomsbooking);
@@ -60,14 +42,43 @@ namespace HotelBooking.API.Controllers
             return roomsbookings;
         }
 
-        [HttpGet("mybooking/{userId}")]
-        public async Task<ActionResult<IEnumerable<RoomBookingDTO>>> GetMyBooking(string userId)
+        [HttpGet("{roomType}/{startdate}/{enddate}")]
+        public async Task<IEnumerable<RoomBookingResponse>> GetAvailabe(string roomType, DateTime startdate, DateTime enddate)
         {
-            var booking = await _bookingService.GetMyBooking(userId);
-            var roomsbookings = new List<RoomBookingDTO>();
+            var bookings = await _bookingService.GetBookingsByStartDateAndEndDate(startdate, enddate);
+            var rooms = await _roomService.GetAll();
+            var roomsbookings = new List<RoomBookingResponse>();
+            foreach (var room in rooms)
+            {
+                var roomsbooking = new RoomBookingResponse
+                {
+                    BookingId = bookings.FirstOrDefault(x => x.RoomId == room.Id)?.Id ?? 0,
+                    StartDate = startdate,
+                    EndDate = enddate,
+                    RoomId = room.Id,
+                    RoomName = room.Name,
+                    Type = room.Type,
+                    UserId = bookings.FirstOrDefault(x => x.RoomId == room.Id)?.UserId ?? "",
+                    Status = bookings.Any(x => x.RoomId == room.Id) ? "Booked" : "Not Booked"
+                };
+                roomsbookings.Add(roomsbooking);
+            }
+            if (roomType.ToLower() == "all")
+            {
+                return roomsbookings.Where(x => x.Status == "Not Booked");
+            }
+            
+            return roomsbookings.Where(x => x.Status == "Not Booked" && x.Type == roomType);
+        }
+
+        [HttpGet("user/{userId}")]
+        public async Task<IEnumerable<RoomBookingResponse>> GetBookingsByUserId(string userId)
+        {
+            var booking = await _bookingService.GetBookingsByUserId(userId);
+            var roomsbookings = new List<RoomBookingResponse>();
             foreach (var item in booking)
             {
-                var roomsbooking = new RoomBookingDTO
+                var roomsbooking = new RoomBookingResponse
                 {
                     BookingId = item.Id,
                     StartDate = item.StartDate,
@@ -80,7 +91,7 @@ namespace HotelBooking.API.Controllers
                 };
                 roomsbookings.Add(roomsbooking);
             }
-            return Ok(roomsbookings);
+            return roomsbookings;
         }
 
         [HttpPost]

@@ -1,9 +1,11 @@
-﻿using HotelBooking.Web.Common.Controllers;
+﻿using HotelBooking.Data.Repository.EFCore;
+using HotelBooking.Web.Common.Controllers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace HotelBooking.API.Controllers
@@ -12,20 +14,43 @@ namespace HotelBooking.API.Controllers
     public class UsersController : DefaultBaseController
     {
         private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserDbContext _dbContext;
 
-        public UsersController(UserManager<IdentityUser> userManager)
+        public UsersController(UserManager<IdentityUser> userManager, UserDbContext dbContext)
         {
             _userManager = userManager;
+            _dbContext = dbContext;
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<IdentityUser>>> GetAllUsers()
+        public async Task<IEnumerable<UserResponse>> GetAllUsers()
         {
-            var users = await _userManager.Users.ToListAsync();
-            return Ok(users);
+            
+            var allUsers = await _userManager.Users.ToListAsync();
+            var allRoles = await _dbContext.Roles.ToListAsync();
+            var allUserRoles = await _dbContext.UserRoles.ToListAsync();
+            var result = new List<UserResponse>();
+            allUsers.ForEach(user =>
+            {
+                var userRoleIds = allUserRoles.Where(u => u.UserId == user.Id).Select(r => r.RoleId);
+                var userRoles = allRoles.Where(r => userRoleIds.Contains(r.Id));
+
+                result.Add(new UserResponse()
+                {
+                    Id = user.Id,
+                    UserName = user.UserName,
+                    Email = user.Email,
+                    EmailConfirmed = user.EmailConfirmed,
+                    Roles = string.Join(",", userRoles.Select(x => x.Name).ToList())
+                });
+
+            });
+           
+
+            return result;
         }
 
-        [HttpPost("makeUserAdmin")]
+        [HttpPost("makeAdmin")]
         public async Task<ActionResult> MakeUserAdmin(string userId)
         {
             var user = await _userManager.FindByIdAsync(userId);
@@ -39,5 +64,25 @@ namespace HotelBooking.API.Controllers
 
             return Ok();
         }
+
+        [HttpPost("makeMember")]
+        public async Task<ActionResult> MakeUserMember(string userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+
+            if (await _userManager.IsInRoleAsync(user, "Administrator"))
+            {
+                await _userManager.RemoveFromRoleAsync(user, "Administrator");
+            }
+
+            await _userManager.AddToRoleAsync(user, "Member");
+
+            return Ok();
+        }
+    }
+
+    public class UserResponse:IdentityUser
+    {
+        public string Roles { get; set; }
     }
 }

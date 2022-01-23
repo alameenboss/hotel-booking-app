@@ -19,33 +19,44 @@ namespace HotelBooking.Service.Implementation
 
         public async Task<IEnumerable<Booking>> GetAll()
         {
-            var result = await _repository.Bookings.GetAll();
-            return result;
+            return await _repository
+                            .Bookings
+                            .GetAll();
         }
 
         public async Task<Booking> GetById(int Id)
         {
-            var result = await _repository
-                .Bookings
-                .GetById(Id);
-            return result;
+            return await _repository
+                            .Bookings
+                            .GetById(Id);
         }
 
-        public async Task<IEnumerable<Booking>> GetBookings(DateTime startdate, DateTime enddate)
-        {
-            return await _repository.Bookings
-                .FindByCondition(x => (x.StartDate.Date >= startdate.AddDays(-1).Date
-                            && x.EndDate.Date <= enddate.AddDays(1).Date), true)
-                .ToListAsync();
-        }
-
-        public async Task<IEnumerable<Booking>> GetMyBooking(string userId)
+        public async Task<IEnumerable<Booking>> GetBookingsByDate(DateTime startdate)
         {
             return await _repository
-                .Bookings
-                .FindByCondition(x => x.UserId == userId, true)
-                .Include(r=>r.Room)
-                .ToListAsync();
+                            .Bookings
+                            .FindByCondition(x => (x.StartDate.Date == startdate), true)
+                            .ToListAsync();
+        }
+
+        public async Task<IEnumerable<Booking>> GetBookingsByStartDateAndEndDate(DateTime startdate, DateTime enddate)
+        {
+            return await _repository
+                            .Bookings
+                            .FindByCondition(x => (x.StartDate.Date >= startdate.AddDays(-1).Date &&
+                                                   x.EndDate.Date <= enddate.AddDays(1).Date),
+                                                   true
+                                            )
+                            .ToListAsync();
+        }
+
+        public async Task<IEnumerable<Booking>> GetBookingsByUserId(string userId)
+        {
+            return await _repository
+                            .Bookings
+                            .FindByCondition(x => x.UserId == userId, true)
+                            .Include(r => r.Room)
+                            .ToListAsync();
         }
 
         public async Task Create(Booking booking)

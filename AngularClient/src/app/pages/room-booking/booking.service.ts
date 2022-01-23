@@ -11,32 +11,20 @@ export class BookingService {
   constructor(private httpClient: HttpClient) {
   }
 
-  getbydate(date): Observable<any> {
-    return this.httpClient.get(`${roomBookingUrl}/bydate/${date}`);
+  getByDate(startDate): Observable<any> {
+    return this.httpClient.get(`${roomBookingUrl}/${startDate}`);
   }
 
-  checkavailable(roomType,startdate,enddate): Observable<any> {
-    return this.httpClient.get(`${roomBookingUrl}/checkavailable/${roomType}/${startdate}/${enddate}`);
-  }
-
-  checkavailablefake(roomType,startdate,enddate): Observable<any> {
-    const roomList = [
-      {roomType:'Single',RoomNumber:'S-100',price:1299},
-      {roomType:'Single',RoomNumber:'S-101',price:1599},
-      {roomType:'Double',RoomNumber:'S-102',price:1799},
-      {roomType:'Single',RoomNumber:'S-103',price:1499},
-      {roomType:'Double',RoomNumber:'S-104',price:1399},
-      {roomType:'Double',RoomNumber:'S-105',price:1899},
-    ]
-    return of(roomList);
+  getAvailableRooms(roomType,startdate,enddate): Observable<any> {
+    return this.httpClient.get(`${roomBookingUrl}/${roomType}/${startdate}/${enddate}`);
   }
 
   bookRoom(data): Observable<any> {
     return this.httpClient.post(roomBookingUrl, data);
   }
 
-  getMyBooking(userId): Observable<any> {
-    return this.httpClient.get(`${roomBookingUrl}/mybooking/${userId}`);
+  getBookingsByUserId(userId): Observable<any> {
+    return this.httpClient.get(`${roomBookingUrl}/user/${userId}`);
   }
 
 }

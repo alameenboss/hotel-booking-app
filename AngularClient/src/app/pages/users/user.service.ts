@@ -15,8 +15,12 @@ export class UserService {
     return this.httpClient.get(`${usersUrl}`);
   }
 
-  makeuseradmin(userId): Observable<any> {
-    return this.httpClient.post(`${usersUrl}/makeuseradmin?userId=${userId}`,{});
+  makeAdmin(userId): Observable<any> {
+    return this.httpClient.post(`${usersUrl}/makeAdmin?userId=${userId}`,{});
+  }
+
+  makeMember(userId): Observable<any> {
+    return this.httpClient.post(`${usersUrl}/makeMember?userId=${userId}`,{});
   }
 
 }

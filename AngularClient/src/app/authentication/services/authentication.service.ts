@@ -22,11 +22,11 @@ export class AuthenticationService {
   private _authChangeSub = new Subject<boolean>()
   public authChanged = this._authChangeSub.asObservable();
   baseUrl;
-  constructor(private _http: HttpClient, 
+  constructor(private _http: HttpClient,
     private _jwtHelper: JwtHelperService, private _externalAuthService: SocialAuthService) {
-      this.baseUrl = environment.identityServerUrl;
+    this.baseUrl = environment.identityServerUrl;
 
-    }
+  }
 
   public registerUser = (route: string, body: UserForRegistrationDto) => {
     return this._http.post<RegistrationResponseDto>(this.createCompleteRoute(route, this.baseUrl), body);
@@ -61,7 +61,7 @@ export class AuthenticationService {
     return this._http.post<AuthResponseDto>(this.createCompleteRoute(route, this.baseUrl), body);
   }
 
-  public signInWithGoogle = ()=> {
+  public signInWithGoogle = () => {
     return this._externalAuthService.signIn(GoogleLoginProvider.PROVIDER_ID);
   }
 
@@ -83,16 +83,16 @@ export class AuthenticationService {
     return isUserAuthenticated;
   }
 
-  private checkRole(_role:string){
+  private checkRole(_role: string) {
     const token = localStorage.getItem("token");
     const decodedToken = this._jwtHelper.decodeToken(token);
-    const role = decodedToken !=null ? decodedToken['role'] : '';
+    const role = decodedToken != null ? decodedToken['role'] : '';
     return role === _role;
   }
-  
+
   public isUserAdmin = (): boolean => this.checkRole('Administrator');
   public isUserMember = (): boolean => this.checkRole('Member');
-  
+
 
   public currentUserId = (): string => {
     const token = localStorage.getItem("token");
@@ -103,4 +103,16 @@ export class AuthenticationService {
   private createCompleteRoute = (route: string, envAddress: string) => {
     return `${envAddress}/${route}`;
   }
+
+  // public currentUserName = (): string => {
+  //   const token = localStorage.getItem("token");
+  //   const decodedToken = this._jwtHelper.decodeToken(token);
+  //   return decodedToken['email'];
+  // }
+
+  // public currentUserRole = (): string => {
+  //   const token = localStorage.getItem("token");
+  //   const decodedToken = this._jwtHelper.decodeToken(token);
+  //   return decodedToken['role'];
+  // }
 }

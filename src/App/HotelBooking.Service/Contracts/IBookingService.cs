@@ -7,14 +7,11 @@ namespace HotelBooking.Service.Contracts
 {
     public interface IBookingService
     {
-        Task<IEnumerable<Booking>> GetAll();
-
-        Task<IEnumerable<Booking>> GetBookings(DateTime startdate, DateTime enddate);
-
-        Task<IEnumerable<Booking>> GetMyBooking(string userId);
-
         Task Create(Booking booking);
-
-        Task<Booking> GetById(int id);
+        Task<IEnumerable<Booking>> GetAll();
+        Task<IEnumerable<Booking>> GetBookingsByDate(DateTime startdate);
+        Task<IEnumerable<Booking>> GetBookingsByStartDateAndEndDate(DateTime startdate, DateTime enddate);
+        Task<IEnumerable<Booking>> GetBookingsByUserId(string userId);
+        Task<Booking> GetById(int Id);
     }
 }

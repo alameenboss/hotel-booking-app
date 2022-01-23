@@ -19,7 +19,7 @@ export interface BookRoom {
 })
 export class BookRoomComponent implements OnInit {
   roomList: BookRoom[] = [];
-  regiForm: FormGroup;
+  bookingForm: FormGroup;
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -34,15 +34,11 @@ export class BookRoomComponent implements OnInit {
   }
 
   initForm() {
-    this.regiForm = this.fb.group({
+    this.bookingForm = this.fb.group({
       'FromDate': [null, Validators.required],
       'ToDate': [null, Validators.required],
       'RoomType': [null, Validators.required],
     });
-  }
-
-  myBooking() {
-    this.router.navigateByUrl(`roombooking/my-booking`);
   }
 
   formateDate(date): string {
@@ -51,7 +47,7 @@ export class BookRoomComponent implements OnInit {
 
   searchRoom() {
     this._bookingService
-      .checkavailable(this.regiForm.value.RoomType, this.formateDate(this.regiForm.value.FromDate), this.formateDate(this.regiForm.value.ToDate))
+      .getAvailableRooms(this.bookingForm.value.RoomType, this.formateDate(this.bookingForm.value.FromDate), this.formateDate(this.bookingForm.value.ToDate))
       .subscribe(data => {
         if (data != null) {
           this.roomList = data;
@@ -63,8 +59,8 @@ export class BookRoomComponent implements OnInit {
 
   bookRoom(roomId) {
     const data = {
-      startDate: this.formateDate(this.regiForm.value.FromDate),
-      endDate: this.formateDate(this.regiForm.value.ToDate),
+      startDate: this.formateDate(this.bookingForm.value.FromDate),
+      endDate: this.formateDate(this.bookingForm.value.ToDate),
       roomId: roomId,
       userId: this._authService.currentUserId()
     };

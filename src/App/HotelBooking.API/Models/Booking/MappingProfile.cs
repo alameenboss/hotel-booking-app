@@ -1,12 +1,12 @@
 ﻿using AutoMapper;
 
-namespace HotelBooking.API.DTO.Booking
+namespace HotelBooking.API.Models.Booking
 {
     public class MappingProfile : Profile
     {
         public MappingProfile()
         {
-            CreateMap<Bookings, BookingDTO>().ReverseMap();
+            //CreateMap<Booking, BookingResponse>().ReverseMap();
         }
     }
 }

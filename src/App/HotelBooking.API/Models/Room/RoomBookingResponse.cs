@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace HotelBooking.API.DTO.Room
+namespace HotelBooking.API.Models.Room
 {
-    public class RoomBookingDTO
+    public class RoomBookingResponse
     {
         public int BookingId { get; set; }
         public DateTime StartDate { get; set; }
@@ -11,7 +11,7 @@ namespace HotelBooking.API.DTO.Room
         public string RoomName { get; set; }
         public string Type { get; set; }
         public string UserId { get; set; }
-        public string FirstName { get; set; }
+
         public string Status { get; set; }
     }
 }

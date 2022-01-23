@@ -15,7 +15,7 @@ export interface User {
   styleUrls: ['./user-list.component.scss']
 })
 export class UserListComponent implements OnInit {
-  displayedColumns: string[] = ['email', 'emailConfirmed', 'action'];
+  displayedColumns: string[] = ['email','roles', 'emailConfirmed', 'action'];
   dataSource: MatTableDataSource<User>;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -56,16 +56,27 @@ export class UserListComponent implements OnInit {
       })
   }
 
-  makeuseradmin(userId) {
-    this._userService.makeuseradmin(userId)
+  makeAdmin(userId) {
+    this._userService.makeAdmin(userId)
       .subscribe(
         response => {
-          this.notifierService.showNotification('User is now Admin', 'Ok', "success");
+          this.notifierService.showNotification('User is now admin', 'Ok', "success");
         },
         error => {
           this.notifierService.showNotification('Not able to make user admin!', 'Ok', "error");
         });
   }
+  makeMember(userId) {
+    this._userService.makeMember(userId)
+      .subscribe(
+        response => {
+          this.notifierService.showNotification('User is now member', 'Ok', "success");
+        },
+        error => {
+          this.notifierService.showNotification('Not able to make user member!', 'Ok', "error");
+        });
+  }
+  
 
   addUser(){
     

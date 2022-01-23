@@ -16,7 +16,7 @@ export class LoginComponent implements OnInit {
   public loginForm: FormGroup;
   public errorMessage: string = '';
   public showError: boolean;
-  private _returnUrl: string;
+  //private _returnUrl: string;
 
   constructor(
     private notifierService: NotifierService,
@@ -29,8 +29,6 @@ export class LoginComponent implements OnInit {
       username: new FormControl("superadmin@gmail.com", [Validators.required, Validators.email]),
       password: new FormControl("Test@123", [Validators.required])
     })
-
-    this._returnUrl = this._route.snapshot.queryParams['returnUrl'] || '/room/dashboard';
   }
 
   public validateControl = (controlName: string) => {
@@ -52,16 +50,16 @@ export class LoginComponent implements OnInit {
     this.notifierService.info('Checking User Info');
     this._authService.loginUser('api/accounts/login', userForAuth)
       .subscribe(res => {
-
+        let _returnUrl = this.GetReturnUrl();
         this.notifierService.showNotification('Logged In', 'Ok', 'success');
         if (res.is2StepVerificationRequired) {
           this._router.navigate(['/authentication/twostepverification'],
-            { queryParams: { returnUrl: this._returnUrl, provider: res.provider, email: userForAuth.email } });
+            { queryParams: { returnUrl: _returnUrl, provider: res.provider, email: userForAuth.email } });
         }
         else {
           localStorage.setItem("token", res.token);
           this._authService.sendAuthStateChangeNotification(res.isAuthSuccessful);
-          this._router.navigate([this._returnUrl]);
+          this._router.navigate([_returnUrl]);
         }
 
       },
@@ -98,16 +96,25 @@ export class LoginComponent implements OnInit {
     
   }
 
+  private GetReturnUrl() {
+    if (this._authService.isUserAdmin) {
+      return this._route.snapshot.queryParams['returnUrl'] || '/room/dashboard';
+    } else {
+      return '/roombooking/book-room';
+    }
+  }
+
   private validateExternalAuth(externalAuth: ExternalAuthDto) {
     this.notifierService.info('Validating Login');
     this._authService.externalLogin('api/accounts/externallogin', externalAuth)
       .subscribe(res => {
+        let _returnUrl = this.GetReturnUrl();
         this.notifierService.showNotification('Logged In', 'Ok', "success");
 
         localStorage.setItem("token", res.token);
         this._authService.sendAuthStateChangeNotification(res.isAuthSuccessful);
 
-        this._router.navigate([this._returnUrl]);
+        this._router.navigate([_returnUrl]);
       },
         error => {
           this.errorMessage = error;

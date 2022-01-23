@@ -19,6 +19,8 @@ export class NavigationComponent {
 
   public isMember: boolean = false;
   public isAdmin: boolean = false;
+  public currentUserName: string = "Alameen";
+  public currentUserRole: string = "Admin";
   constructor(
     public _authService: AuthenticationService,
     private _router: Router,
@@ -42,6 +44,8 @@ export class NavigationComponent {
     this.isUserAuthenticated = this._authService.isUserAuthenticated();
     this.isMember = this._authService.isUserMember();
     this.isAdmin = this._authService.isUserAdmin();
+    //this.currentUserName = this._authService.currentUserName();
+    //this.currentUserRole = this._authService.currentUserRole();
     this.loadMenu();
   }
 
@@ -76,6 +80,7 @@ export class NavigationComponent {
 
     const menu = [
       { "icon": "local_hotel", "path": "roombooking/book-room", "title": "Book Room", "role": "member" },
+      { "icon": "local_hotel", "path": "roombooking/my-booking", "title": "My Bookings", "role": "member" },
       { "icon": "room", "path": "room/dashboard", "title": "Dashboard", "role": "admin" },
       { "icon": "local_hotel", "path": "room/room-list", "title": "Rooms", "role": "admin" },
       { "icon": "person", "path": "user", "title": "Users", "role": "admin" },
@@ -93,5 +98,7 @@ export class NavigationComponent {
 
     this._router.navigate(["/"]);
   }
+
+
 
 }

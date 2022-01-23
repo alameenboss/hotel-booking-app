@@ -63,17 +63,13 @@ export class DashboardComponent {
 
   onFormSubmit(form: NgForm) {
     this._bookingService
-      .getbydate(this.formateDate(this.regiForm.value.BookingDate))
+      .getByDate(this.formateDate(this.regiForm.value.BookingDate))
       .subscribe(data => {
         if (data != null) {
           this.setDataSource(data)
         }
       }, err => {
       })
-  }
-
-  gotoRoomList() {
-    this.router.navigateByUrl('room/room-list')
   }
 }
 

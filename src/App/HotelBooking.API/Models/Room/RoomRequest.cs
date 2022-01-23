@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace HotelBooking.API.DTO.Booking
+namespace HotelBooking.API.Models.Room
 {
-    public class BookingDTO
+    public class RoomRequest
     {
-        public int RoomId { get; set; }
     }
 }

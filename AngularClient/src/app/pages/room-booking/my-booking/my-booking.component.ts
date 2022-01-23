@@ -43,7 +43,7 @@ export class MyBookingComponent implements OnInit {
   getMyBooking() {
     this.currentUserId = this._authService.currentUserId();
     this._bookingService
-      .getMyBooking(this.currentUserId)
+      .getBookingsByUserId(this.currentUserId)
       .subscribe(data => {
         if (data != null) {
           this.setDataSource(data)
