@@ -41,7 +41,12 @@ namespace HotelBooking.EmailService
 
             var bodyBuilder = new BodyBuilder { HtmlBody = string.Format("<h2 style='color:red;'>{0}</h2>", message.Content) };
             string emailmsg = string.Format("<a href='{0}'>Click</a> to confirm email.", message.Content);
-            File.WriteAllText(@"C:\Temp\confirmemail.html", emailmsg);
+
+            if (_emailConfig.TempFolderLocation != "")
+            {
+                File.WriteAllText(_emailConfig.TempFolderLocation, emailmsg);
+            }
+            
             if (message.Attachments != null && message.Attachments.Any())
             {
                 byte[] fileBytes;

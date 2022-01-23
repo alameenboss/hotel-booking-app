@@ -31,6 +31,9 @@
             <button mat-raised-button color="accent" (click)="addUser()">New User</button>
           </th>
           <td mat-cell *matCellDef="let row">
+            <button mat-raised-button color="primary" (click)="deleteUser(row.id)">
+              <span>Delete User</span>
+            </button>
             <button mat-raised-button color="primary" (click)="makeAdmin(row.id)" *ngIf="row.roles == 'Member'">
               <span>Make Admin</span>
             </button>

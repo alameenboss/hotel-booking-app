@@ -23,4 +23,8 @@ export class UserService {
     return this.httpClient.post(`${usersUrl}/makeMember?userId=${userId}`,{});
   }
 
+  deleteUser(userId:string): Observable<any>{
+    return this.httpClient.delete(`${usersUrl}/${userId}`);
+  }
+
 }

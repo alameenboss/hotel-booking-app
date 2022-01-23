@@ -66,6 +66,7 @@ export class UserListComponent implements OnInit {
           this.notifierService.showNotification('Not able to make user admin!', 'Ok', "error");
         });
   }
+
   makeMember(userId) {
     this._userService.makeMember(userId)
       .subscribe(
@@ -77,6 +78,17 @@ export class UserListComponent implements OnInit {
         });
   }
   
+  deleteUser(userId:string){
+    this._userService.deleteUser(userId)
+    .subscribe(
+      response => {
+        this.notifierService.showNotification('User is deleted', 'Ok', "success");
+        this.getalluser();
+      },
+      error => {
+        this.notifierService.showNotification('Not able to delete the user!', 'Ok', "error");
+      });
+  }
 
   addUser(){
     

@@ -19,9 +19,6 @@ namespace HotelBooking.API
 
                 IWebHostEnvironment env = host.Services.GetRequiredService<IWebHostEnvironment>();
 
-               
-
-
                 //using (var serviceScope = host.Services.CreateScope())
                 //{
                 //    var context = serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
