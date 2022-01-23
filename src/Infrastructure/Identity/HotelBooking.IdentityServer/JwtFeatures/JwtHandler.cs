@@ -1,5 +1,5 @@
 ﻿using Google.Apis.Auth;
-using HotelBooking.API.DTO.Auth;
+using HotelBooking.IdentityServer.Models.Auth;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;

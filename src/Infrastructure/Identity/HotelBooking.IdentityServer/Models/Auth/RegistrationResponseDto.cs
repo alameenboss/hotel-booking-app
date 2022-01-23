@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace HotelBooking.API.DTO.Auth
+namespace HotelBooking.IdentityServer.Models.Auth
 {
     public class RegistrationResponseDto
     {

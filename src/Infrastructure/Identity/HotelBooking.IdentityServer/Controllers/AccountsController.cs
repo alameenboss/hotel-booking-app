@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using HotelBooking.API.DTO.Auth;
 using HotelBooking.API.JwtFeatures;
 using HotelBooking.EmailService.Interface;
 using HotelBooking.EmailService.Model;
+using HotelBooking.IdentityServer.Models.Auth;
 using HotelBooking.Web.Common.Controllers;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;

@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 
-namespace HotelBooking.API.DTO.Auth
+namespace HotelBooking.IdentityServer.Models.Auth
 {
     public class MappingProfile : Profile
     {

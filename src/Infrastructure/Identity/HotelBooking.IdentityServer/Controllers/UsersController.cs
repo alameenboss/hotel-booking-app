@@ -1,4 +1,5 @@
 ﻿using HotelBooking.Data.Repository.EFCore;
+using HotelBooking.IdentityServer.Models.User;
 using HotelBooking.Web.Common.Controllers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -79,10 +80,5 @@ namespace HotelBooking.API.Controllers
 
             return Ok();
         }
-    }
-
-    public class UserResponse:IdentityUser
-    {
-        public string Roles { get; set; }
     }
 }

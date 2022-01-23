@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace HotelBooking.API.DTO.Auth
+namespace HotelBooking.IdentityServer.Models.Auth
 {
     public class UserForAuthenticationDto
     {
